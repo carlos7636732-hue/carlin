@@ -1,0 +1,137 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.lang import Builder
+import sqlite3
+import speech_recognition as sr
+import pyttsx3
+from openai import OpenAI
+
+# =========================
+# CONFIG
+# =========================
+API_KEY = "SUA_CHAVE_AQUI"
+client = OpenAI(api_key=API_KEY)
+
+engine = pyttsx3.init()
+
+# =========================
+# BANCO DE DADOS
+# =========================
+def criar_db():
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, pass TEXT)")
+    conn.commit()
+    conn.close()
+
+def registrar(user, senha):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("INSERT INTO users VALUES (?, ?)", (user, senha))
+    conn.commit()
+    conn.close()
+
+def login(user, senha):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE user=? AND pass=?", (user, senha))
+    result = c.fetchone()
+    conn.close()
+    return result
+
+# =========================
+# IA
+# =========================
+def perguntar_ia(pergunta):
+    try:
+        resposta = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": pergunta}]
+        )
+        return resposta.choices[0].message.content
+    except:
+        return "Erro na IA"
+
+# =========================
+# INTERFACE
+# =========================
+KV = '''
+BoxLayout:
+    orientation: "vertical"
+    padding: 20
+    spacing: 10
+
+    Label:
+        text: "🎒 Mochila Inteligente"
+
+    TextInput:
+        id: user
+        hint_text: "Usuário"
+
+    TextInput:
+        id: senha
+        hint_text: "Senha"
+        password: True
+
+    Button:
+        text: "Registrar"
+        on_press: app.registrar()
+
+    Button:
+        text: "Login"
+        on_press: app.fazer_login()
+
+    Button:
+        text: "🎤 Falar com IA"
+        on_press: app.ouvir()
+
+    Label:
+        id: resposta
+        text: ""
+'''
+
+# =========================
+# APP
+# =========================
+class MochilaApp(App):
+    def build(self):
+        criar_db()
+        return Builder.load_string(KV)
+
+    def registrar(self):
+        u = self.root.ids.user.text
+        s = self.root.ids.senha.text
+        registrar(u, s)
+        self.root.ids.resposta.text = "Registrado!"
+
+    def fazer_login(self):
+        u = self.root.ids.user.text
+        s = self.root.ids.senha.text
+
+        if login(u, s):
+            self.root.ids.resposta.text = "Login OK!"
+        else:
+            self.root.ids.resposta.text = "Erro login"
+
+    def ouvir(self):
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            self.root.ids.resposta.text = "Ouvindo..."
+            audio = r.listen(source)
+
+        try:
+            texto = r.recognize_google(audio, language="pt-BR")
+            resposta = perguntar_ia(texto)
+
+            self.root.ids.resposta.text = resposta
+
+            engine.say(resposta)
+            engine.runAndWait()
+
+        except:
+            self.root.ids.resposta.text = "Erro na voz"
+
+# =========================
+# RUN
+# =========================
+MochilaApp().run()
