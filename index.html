@@ -1,137 +1,235 @@
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.lang import Builder
-import sqlite3
-import speech_recognition as sr
-import pyttsx3
-from openai import OpenAI
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mochila Inteligente PRO MAX</title>
 
-# =========================
-# CONFIG
-# =========================
-API_KEY = "SUA_CHAVE_AQUI"
-client = OpenAI(api_key=API_KEY)
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #121212;
+    color: white;
+}
 
-engine = pyttsx3.init()
+header {
+    background: #1e88e5;
+    padding: 15px;
+    text-align: center;
+}
 
-# =========================
-# BANCO DE DADOS
-# =========================
-def criar_db():
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS users (user TEXT, pass TEXT)")
-    conn.commit()
-    conn.close()
+#dataHora {
+    font-size: 14px;
+}
 
-def registrar(user, senha):
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    c.execute("INSERT INTO users VALUES (?, ?)", (user, senha))
-    conn.commit()
-    conn.close()
+.container {
+    padding: 15px;
+}
 
-def login(user, senha):
-    conn = sqlite3.connect("users.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM users WHERE user=? AND pass=?", (user, senha))
-    result = c.fetchone()
-    conn.close()
-    return result
+.card {
+    background: #1e1e1e;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
 
-# =========================
-# IA
-# =========================
-def perguntar_ia(pergunta):
-    try:
-        resposta = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": pergunta}]
-        )
-        return resposta.choices[0].message.content
-    except:
-        return "Erro na IA"
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+}
 
-# =========================
-# INTERFACE
-# =========================
-KV = '''
-BoxLayout:
-    orientation: "vertical"
-    padding: 20
-    spacing: 10
+button {
+    background: #1e88e5;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-    Label:
-        text: "🎒 Mochila Inteligente"
+#chat {
+    height: 200px;
+    overflow-y: auto;
+    background: black;
+    padding: 10px;
+    border-radius: 5px;
+}
 
-    TextInput:
-        id: user
-        hint_text: "Usuário"
+.msg-user { text-align: right; color: #4caf50; }
+.msg-bot { text-align: left; color: #03a9f4; }
+</style>
+</head>
 
-    TextInput:
-        id: senha
-        hint_text: "Senha"
-        password: True
+<body>
 
-    Button:
-        text: "Registrar"
-        on_press: app.registrar()
+<header>
+🎒 Mochila Inteligente PRO MAX
+<div id="dataHora"></div>
+</header>
 
-    Button:
-        text: "Login"
-        on_press: app.fazer_login()
+<div class="container">
 
-    Button:
-        text: "🎤 Falar com IA"
-        on_press: app.ouvir()
+<!-- CALCULADORA -->
+<div class="card">
+<h3>🧮 Calculadora</h3>
+<input type="text" id="calc">
+<button onclick="calcular()">Calcular</button>
+<p id="resultado"></p>
+</div>
 
-    Label:
-        id: resposta
-        text: ""
-'''
+<!-- CADERNO -->
+<div class="card">
+<h3>📓 Caderno</h3>
+<textarea id="caderno"></textarea>
+</div>
 
-# =========================
-# APP
-# =========================
-class MochilaApp(App):
-    def build(self):
-        criar_db()
-        return Builder.load_string(KV)
+<!-- AGENDA -->
+<div class="card">
+<h3>📅 Agenda Escolar</h3>
+<input type="date" id="dataAgenda">
+<input type="text" id="tarefa" placeholder="Tarefa">
+<button onclick="addTarefa()">Adicionar</button>
+<ul id="listaTarefas"></ul>
+</div>
 
-    def registrar(self):
-        u = self.root.ids.user.text
-        s = self.root.ids.senha.text
-        registrar(u, s)
-        self.root.ids.resposta.text = "Registrado!"
+<!-- NOTAS -->
+<div class="card">
+<h3>📝 Notas</h3>
+<input type="text" id="materia" placeholder="Matéria">
+<input type="number" id="nota" placeholder="Nota">
+<button onclick="addNota()">Adicionar Nota</button>
+<ul id="listaNotas"></ul>
+</div>
 
-    def fazer_login(self):
-        u = self.root.ids.user.text
-        s = self.root.ids.senha.text
+<!-- BOLETIM -->
+<div class="card">
+<h3>📊 Boletim</h3>
+<p id="media"></p>
+</div>
 
-        if login(u, s):
-            self.root.ids.resposta.text = "Login OK!"
-        else:
-            self.root.ids.resposta.text = "Erro login"
+<!-- IA -->
+<div class="card">
+<h3>🤖 IA Escolar</h3>
+<div id="chat"></div>
+<input type="text" id="pergunta">
+<button onclick="perguntar()">Enviar</button>
+</div>
 
-    def ouvir(self):
-        r = sr.Recognizer()
-        with sr.Microphone() as source:
-            self.root.ids.resposta.text = "Ouvindo..."
-            audio = r.listen(source)
+</div>
 
-        try:
-            texto = r.recognize_google(audio, language="pt-BR")
-            resposta = perguntar_ia(texto)
+<script>
 
-            self.root.ids.resposta.text = resposta
+// DATA E HORA
+function atualizarRelogio() {
+    let agora = new Date();
+    document.getElementById("dataHora").innerText =
+        agora.toLocaleDateString('pt-BR') + " - " +
+        agora.toLocaleTimeString('pt-BR');
+}
+setInterval(atualizarRelogio, 1000);
 
-            engine.say(resposta)
-            engine.runAndWait()
+// CALCULADORA
+function calcular() {
+    try {
+        let r = eval(document.getElementById("calc").value);
+        document.getElementById("resultado").innerText = r;
+    } catch {
+        document.getElementById("resultado").innerText = "Erro";
+    }
+}
 
-        except:
-            self.root.ids.resposta.text = "Erro na voz"
+// CADERNO
+let caderno = document.getElementById("caderno");
+caderno.value = localStorage.getItem("caderno") || "";
+caderno.oninput = () => localStorage.setItem("caderno", caderno.value);
 
-# =========================
-# RUN
-# =========================
-MochilaApp().run()
+// AGENDA
+let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+
+function renderTarefas() {
+    let lista = document.getElementById("listaTarefas");
+    lista.innerHTML = "";
+    tarefas.forEach(t => {
+        lista.innerHTML += `<li>${t.data} - ${t.texto}</li>`;
+    });
+}
+
+function addTarefa() {
+    let data = document.getElementById("dataAgenda").value;
+    let texto = document.getElementById("tarefa").value;
+
+    tarefas.push({data, texto});
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    renderTarefas();
+}
+
+renderTarefas();
+
+// NOTAS
+let notas = JSON.parse(localStorage.getItem("notas")) || [];
+
+function renderNotas() {
+    let lista = document.getElementById("listaNotas");
+    lista.innerHTML = "";
+
+    notas.forEach(n => {
+        lista.innerHTML += `<li>${n.materia}: ${n.nota}</li>`;
+    });
+
+    calcularMedia();
+}
+
+function addNota() {
+    let materia = document.getElementById("materia").value;
+    let nota = parseFloat(document.getElementById("nota").value);
+
+    notas.push({materia, nota});
+    localStorage.setItem("notas", JSON.stringify(notas));
+    renderNotas();
+}
+
+function calcularMedia() {
+    if (notas.length === 0) return;
+
+    let soma = notas.reduce((a,b)=>a+b.nota,0);
+    let media = soma / notas.length;
+
+    document.getElementById("media").innerText =
+        "Média: " + media.toFixed(2);
+}
+
+renderNotas();
+
+// IA
+function perguntar() {
+    let input = document.getElementById("pergunta");
+    let chat = document.getElementById("chat");
+
+    let texto = input.value;
+    if (!texto) return;
+
+    chat.innerHTML += `<p class="msg-user">${texto}</p>`;
+
+    let resp = "Ainda estou aprendendo 🤖";
+
+    if (texto.includes("oi")) resp = "Olá!";
+    if (texto.includes("matematica")) resp = "Posso te ajudar com contas!";
+    if (texto.includes("historia")) resp = "História é sobre o passado.";
+
+    setTimeout(()=>{
+        chat.innerHTML += `<p class="msg-bot">${resp}</p>`;
+        chat.scrollTop = chat.scrollHeight;
+    },500);
+
+    input.value="";
+}
+
+</script>
+
+</body>
+</html>
