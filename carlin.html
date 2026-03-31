@@ -11,42 +11,72 @@ body {
     font-family: Arial, sans-serif;
     background: #0f172a;
     color: white;
+    scroll-behavior: smooth;
 }
 
+/* HEADER */
 header {
-    background: #1e3a8a;
-    padding: 20px;
+    background: linear-gradient(45deg, #1e3a8a, #2563eb);
+    padding: 40px;
     text-align: center;
+    animation: fadeDown 1s ease;
 }
 
 h1 {
     margin: 0;
+    font-size: 28px;
 }
 
+/* CONTAINER */
 .container {
     padding: 20px;
 }
 
+/* CARDS */
 .card {
     background: #1e293b;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 12px;
-    transition: 0.3s;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.6s;
 }
 
+/* ANIMAÇÃO AO APARECER */
+.card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* HOVER */
 .card:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
 }
 
+/* ICON */
 .icon {
     font-size: 40px;
 }
 
+/* FOOTER */
 footer {
     text-align: center;
-    padding: 15px;
+    padding: 20px;
     background: #1e3a8a;
+}
+
+/* KEYFRAMES */
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
 
@@ -56,7 +86,7 @@ footer {
 
 <header>
     <h1>💻 Tipos de Sistemas Computacionais</h1>
-    <p>Entenda os principais tipos de sistemas usados atualmente</p>
+    <p>Entenda os principais tipos de sistemas</p>
 </header>
 
 <div class="container">
@@ -73,24 +103,24 @@ footer {
     <div class="icon">📱</div>
     <h2>Mobile</h2>
     <p><strong>Exemplo:</strong> Android</p>
-    <p>👉 Smartphones e tablets</p>
-    <p>👉 Foco: aplicativos e mobilidade</p>
+    <p>👉 Smartphones</p>
+    <p>👉 Foco: mobilidade e apps</p>
 </div>
 
 <div class="card">
     <div class="icon">🌐</div>
     <h2>Servidores</h2>
-    <p>👉 Computadores que servem outros dispositivos</p>
-    <p>👉 Hospedam sites, sistemas e bancos de dados</p>
-    <p>👉 Ex: sites hospedados no GitHub Pages</p>
+    <p>👉 Computadores que servem outros</p>
+    <p>👉 Hospedam sites</p>
+    <p>👉 Ex: GitHub Pages</p>
 </div>
 
 <div class="card">
     <div class="icon">🤖</div>
     <h2>Embarcados</h2>
-    <p>👉 Sistemas dentro de dispositivos</p>
-    <p>👉 Ex: TVs, carros, micro-ondas</p>
-    <p>👉 Foco: funções específicas</p>
+    <p>👉 Dentro de dispositivos</p>
+    <p>👉 Ex: TV, carro, micro-ondas</p>
+    <p>👉 Função específica</p>
 </div>
 
 </div>
@@ -98,6 +128,27 @@ footer {
 <footer>
     <p>© 2026 - Projeto Educacional</p>
 </footer>
+
+<script>
+
+// ANIMAÇÃO AO ROLAR
+function animarCards() {
+    let cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        let topo = card.getBoundingClientRect().top;
+        let alturaTela = window.innerHeight;
+
+        if (topo < alturaTela - 50) {
+            card.classList.add('show');
+        }
+    });
+}
+
+window.addEventListener('scroll', animarCards);
+window.onload = animarCards;
+
+</script>
 
 </body>
 </html>
