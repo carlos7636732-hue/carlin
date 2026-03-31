@@ -77,7 +77,7 @@ button {
 <!-- CALCULADORA -->
 <div class="card">
 <h3>🧮 Calculadora</h3>
-<input type="text" id="calc">
+<input type="text" id="calc" placeholder="Ex: 10*5+2">
 <button onclick="calcular()">Calcular</button>
 <p id="resultado"></p>
 </div>
@@ -116,8 +116,26 @@ button {
 <div class="card">
 <h3>🤖 IA Escolar</h3>
 <div id="chat"></div>
-<input type="text" id="pergunta">
+<input type="text" id="pergunta" placeholder="Pergunte algo...">
 <button onclick="perguntar()">Enviar</button>
+</div>
+
+<!-- MUSICA YOUTUBE -->
+<div class="card">
+<h3>🎧 Música (YouTube)</h3>
+
+<input type="text" id="linkYT" placeholder="Cole o link do YouTube aqui">
+<button onclick="carregarVideo()">Carregar</button>
+
+<br><br>
+
+<iframe id="playerYT" width="100%" height="200"
+src=""
+frameborder="0"
+allow="autoplay; encrypted-media"
+allowfullscreen>
+</iframe>
+
 </div>
 
 </div>
@@ -137,7 +155,7 @@ setInterval(atualizarRelogio, 1000);
 function calcular() {
     try {
         let r = eval(document.getElementById("calc").value);
-        document.getElementById("resultado").innerText = r;
+        document.getElementById("resultado").innerText = "Resultado: " + r;
     } catch {
         document.getElementById("resultado").innerText = "Erro";
     }
@@ -162,6 +180,8 @@ function renderTarefas() {
 function addTarefa() {
     let data = document.getElementById("dataAgenda").value;
     let texto = document.getElementById("tarefa").value;
+
+    if (!data || !texto) return;
 
     tarefas.push({data, texto});
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
@@ -188,6 +208,8 @@ function addNota() {
     let materia = document.getElementById("materia").value;
     let nota = parseFloat(document.getElementById("nota").value);
 
+    if (!materia || isNaN(nota)) return;
+
     notas.push({materia, nota});
     localStorage.setItem("notas", JSON.stringify(notas));
     renderNotas();
@@ -205,7 +227,7 @@ function calcularMedia() {
 
 renderNotas();
 
-// IA
+// IA SIMPLES
 function perguntar() {
     let input = document.getElementById("pergunta");
     let chat = document.getElementById("chat");
@@ -220,6 +242,7 @@ function perguntar() {
     if (texto.includes("oi")) resp = "Olá!";
     if (texto.includes("matematica")) resp = "Posso te ajudar com contas!";
     if (texto.includes("historia")) resp = "História é sobre o passado.";
+    if (texto.includes("2+2")) resp = "2 + 2 = 4";
 
     setTimeout(()=>{
         chat.innerHTML += `<p class="msg-bot">${resp}</p>`;
@@ -227,6 +250,23 @@ function perguntar() {
     },500);
 
     input.value="";
+}
+
+// YOUTUBE PLAYER
+function carregarVideo() {
+    let link = document.getElementById("linkYT").value;
+
+    if (!link) return;
+
+    let id = link.split("v=")[1];
+
+    if (id && id.includes("&")) {
+        id = id.split("&")[0];
+    }
+
+    let embed = "https://www.youtube.com/embed/" + id;
+
+    document.getElementById("playerYT").src = embed;
 }
 
 </script>
