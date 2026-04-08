@@ -1,276 +1,205 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mochila Inteligente PRO MAX</title>
+<title>Mochila Gamer IA</title>
 
 <style>
 body {
     margin: 0;
     font-family: Arial;
-    background: #121212;
-    color: white;
+    background: black;
+    color: #00ffff;
+    overflow-x: hidden;
 }
 
+/* FUNDO ANIMADO */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* HEADER */
 header {
-    background: #1e88e5;
-    padding: 15px;
     text-align: center;
+    padding: 20px;
+    font-size: 22px;
+    text-shadow: 0 0 10px #00ffff;
 }
 
-#dataHora {
-    font-size: 14px;
-}
-
-.container {
-    padding: 15px;
-}
-
+/* CARDS */
 .card {
-    background: #1e1e1e;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 10px #00ffff;
+    margin: 15px;
     padding: 15px;
-    margin-bottom: 15px;
     border-radius: 10px;
 }
 
+/* INPUT */
 input, textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border-radius: 5px;
-    border: none;
+    background: black;
+    border: 1px solid #00ffff;
+    color: #00ffff;
 }
 
+/* BOTÃO NEON */
 button {
-    background: #1e88e5;
-    color: white;
-    border: none;
+    background: black;
+    border: 1px solid #00ffff;
+    color: #00ffff;
     padding: 10px;
     margin-top: 10px;
-    border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
+button:hover {
+    box-shadow: 0 0 15px #00ffff;
+    transform: scale(1.05);
+}
+
+/* CHAT */
 #chat {
-    height: 200px;
+    height: 150px;
     overflow-y: auto;
     background: black;
+    border: 1px solid #00ffff;
     padding: 10px;
-    border-radius: 5px;
 }
 
-.msg-user { text-align: right; color: #4caf50; }
-.msg-bot { text-align: left; color: #03a9f4; }
+.msg-user { color: #00ff00; text-align: right; }
+.msg-bot { color: #00ffff; }
+
 </style>
 </head>
 
 <body>
 
-<header>
-🎒 Mochila Inteligente PRO MAX
-<div id="dataHora"></div>
-</header>
+<canvas id="bg"></canvas>
 
-<div class="container">
+<header>🎮 Mochila Gamer IA 🤖</header>
 
-<!-- CALCULADORA -->
 <div class="card">
 <h3>🧮 Calculadora</h3>
-<input type="text" id="calc" placeholder="Ex: 10*5+2">
+<input id="calc">
 <button onclick="calcular()">Calcular</button>
 <p id="resultado"></p>
 </div>
 
-<!-- CADERNO -->
 <div class="card">
 <h3>📓 Caderno</h3>
 <textarea id="caderno"></textarea>
 </div>
 
-<!-- AGENDA -->
 <div class="card">
-<h3>📅 Agenda Escolar</h3>
-<input type="date" id="dataAgenda">
-<input type="text" id="tarefa" placeholder="Tarefa">
-<button onclick="addTarefa()">Adicionar</button>
-<ul id="listaTarefas"></ul>
-</div>
-
-<!-- NOTAS -->
-<div class="card">
-<h3>📝 Notas</h3>
-<input type="text" id="materia" placeholder="Matéria">
-<input type="number" id="nota" placeholder="Nota">
-<button onclick="addNota()">Adicionar Nota</button>
-<ul id="listaNotas"></ul>
-</div>
-
-<!-- BOLETIM -->
-<div class="card">
-<h3>📊 Boletim</h3>
-<p id="media"></p>
-</div>
-
-<!-- IA -->
-<div class="card">
-<h3>🤖 IA Escolar</h3>
+<h3>🤖 IA com Voz</h3>
 <div id="chat"></div>
-<input type="text" id="pergunta" placeholder="Pergunte algo...">
+<input id="pergunta">
 <button onclick="perguntar()">Enviar</button>
-</div>
-
-<!-- MUSICA YOUTUBE -->
-<div class="card">
-<h3>🎧 Música (YouTube)</h3>
-
-<input type="text" id="linkYT" placeholder="Cole o link do YouTube aqui">
-<button onclick="carregarVideo()">Carregar</button>
-
-<br><br>
-
-<iframe id="playerYT" width="100%" height="200"
-src=""
-frameborder="0"
-allow="autoplay; encrypted-media"
-allowfullscreen>
-</iframe>
-
-</div>
-
+<button onclick="falar()">🎤 Falar</button>
 </div>
 
 <script>
 
-// DATA E HORA
-function atualizarRelogio() {
-    let agora = new Date();
-    document.getElementById("dataHora").innerText =
-        agora.toLocaleDateString('pt-BR') + " - " +
-        agora.toLocaleTimeString('pt-BR');
+// FUNDO ANIMADO
+let c = document.getElementById("bg");
+let ctx = c.getContext("2d");
+
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<100;i++){
+    particles.push({
+        x: Math.random()*c.width,
+        y: Math.random()*c.height,
+        dx: Math.random()*2,
+        dy: Math.random()*2
+    });
 }
-setInterval(atualizarRelogio, 1000);
+
+function animarBG(){
+    ctx.fillStyle="black";
+    ctx.fillRect(0,0,c.width,c.height);
+
+    ctx.fillStyle="#00ffff";
+
+    particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fill();
+
+        p.x+=p.dx;
+        p.y+=p.dy;
+
+        if(p.x>c.width) p.x=0;
+        if(p.y>c.height) p.y=0;
+    });
+
+    requestAnimationFrame(animarBG);
+}
+animarBG();
 
 // CALCULADORA
-function calcular() {
-    try {
-        let r = eval(document.getElementById("calc").value);
-        document.getElementById("resultado").innerText = "Resultado: " + r;
-    } catch {
-        document.getElementById("resultado").innerText = "Erro";
+function calcular(){
+    try{
+        resultado.innerText = eval(calc.value);
+    }catch{
+        resultado.innerText = "Erro";
     }
 }
 
 // CADERNO
-let caderno = document.getElementById("caderno");
 caderno.value = localStorage.getItem("caderno") || "";
-caderno.oninput = () => localStorage.setItem("caderno", caderno.value);
+caderno.oninput = ()=> localStorage.setItem("caderno", caderno.value);
 
-// AGENDA
-let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
-
-function renderTarefas() {
-    let lista = document.getElementById("listaTarefas");
-    lista.innerHTML = "";
-    tarefas.forEach(t => {
-        lista.innerHTML += `<li>${t.data} - ${t.texto}</li>`;
-    });
-}
-
-function addTarefa() {
-    let data = document.getElementById("dataAgenda").value;
-    let texto = document.getElementById("tarefa").value;
-
-    if (!data || !texto) return;
-
-    tarefas.push({data, texto});
-    localStorage.setItem("tarefas", JSON.stringify(tarefas));
-    renderTarefas();
-}
-
-renderTarefas();
-
-// NOTAS
-let notas = JSON.parse(localStorage.getItem("notas")) || [];
-
-function renderNotas() {
-    let lista = document.getElementById("listaNotas");
-    lista.innerHTML = "";
-
-    notas.forEach(n => {
-        lista.innerHTML += `<li>${n.materia}: ${n.nota}</li>`;
-    });
-
-    calcularMedia();
-}
-
-function addNota() {
-    let materia = document.getElementById("materia").value;
-    let nota = parseFloat(document.getElementById("nota").value);
-
-    if (!materia || isNaN(nota)) return;
-
-    notas.push({materia, nota});
-    localStorage.setItem("notas", JSON.stringify(notas));
-    renderNotas();
-}
-
-function calcularMedia() {
-    if (notas.length === 0) return;
-
-    let soma = notas.reduce((a,b)=>a+b.nota,0);
-    let media = soma / notas.length;
-
-    document.getElementById("media").innerText =
-        "Média: " + media.toFixed(2);
-}
-
-renderNotas();
-
-// IA SIMPLES
-function perguntar() {
-    let input = document.getElementById("pergunta");
-    let chat = document.getElementById("chat");
-
-    let texto = input.value;
-    if (!texto) return;
+// IA TEXTO
+function perguntar(){
+    let texto = pergunta.value;
+    if(!texto) return;
 
     chat.innerHTML += `<p class="msg-user">${texto}</p>`;
 
-    let resp = "Ainda estou aprendendo 🤖";
+    let resp = "Estou aprendendo 🤖";
 
-    if (texto.includes("oi")) resp = "Olá!";
-    if (texto.includes("matematica")) resp = "Posso te ajudar com contas!";
-    if (texto.includes("historia")) resp = "História é sobre o passado.";
-    if (texto.includes("2+2")) resp = "2 + 2 = 4";
+    if(texto.includes("oi")) resp="Olá!";
+    if(texto.includes("2+2")) resp="4";
 
     setTimeout(()=>{
         chat.innerHTML += `<p class="msg-bot">${resp}</p>`;
-        chat.scrollTop = chat.scrollHeight;
     },500);
 
-    input.value="";
+    // FALA RESPOSTA
+    let voz = new SpeechSynthesisUtterance(resp);
+    speechSynthesis.speak(voz);
+
+    pergunta.value="";
 }
 
-// YOUTUBE PLAYER
-function carregarVideo() {
-    let link = document.getElementById("linkYT").value;
+// IA VOZ (OUVIR)
+function falar(){
+    let rec = new webkitSpeechRecognition();
+    rec.lang = "pt-BR";
 
-    if (!link) return;
-
-    let id = link.split("v=")[1];
-
-    if (id && id.includes("&")) {
-        id = id.split("&")[0];
+    rec.onresult = function(e){
+        let texto = e.results[0][0].transcript;
+        pergunta.value = texto;
+        perguntar();
     }
 
-    let embed = "https://www.youtube.com/embed/" + id;
-
-    document.getElementById("playerYT").src = embed;
+    rec.start();
 }
 
 </script>
 
 </body>
-    <a href="carlin.html"> AULA X </a>
 </html>
