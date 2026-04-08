@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Braille</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #111;
+    color: white;
+    text-align: center;
+}
+
+/* HEADER */
+header {
+    background: #222;
+    padding: 20px;
+}
+
+/* CONTAINER */
+.container {
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: #1e1e1e;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+}
+
+/* BRAILLE */
+.braille {
+    font-size: 30px;
+    margin-top: 10px;
+    color: #00ffcc;
+}
+
+/* INPUT */
+input {
+    padding: 10px;
+    width: 80%;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* BOTÃO */
+button {
+    padding: 10px;
+    margin-top: 10px;
+    background: #00ffcc;
+    border: none;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>🔤 Sistema Braille</h1>
+<p>Aprenda e teste o alfabeto Braille</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>📖 O que é Braille?</h2>
+<p>
+O sistema Braille é um método de leitura e escrita tátil usado por pessoas cegas.
+Ele utiliza combinações de pontos em relevo que representam letras e números.
+</p>
+</div>
+
+<div class="card">
+<h2>🔤 Alfabeto Braille</h2>
+<p class="braille">
+⠁ ⠃ ⠉ ⠙ ⠑ ⠋ ⠛ ⠓ ⠊ ⠚ <br>
+⠅ ⠇ ⠍ ⠝ ⠕ ⠏ ⠟ ⠗ ⠎ ⠞ <br>
+⠥ ⠧ ⠺ ⠭ ⠽ ⠵
+</p>
+</div>
+
+<div class="card">
+<h2>🎮 Tradutor para Braille</h2>
+
+<input type="text" id="texto" placeholder="Digite algo...">
+<br>
+<button onclick="traduzir()">Traduzir</button>
+
+<p class="braille" id="resultado"></p>
+
+</div>
+
+</div>
+
+<script>
+
+// MAPA BRAILLE
+const brailleMap = {
+a:"⠁", b:"⠃", c:"⠉", d:"⠙", e:"⠑",
+f:"⠋", g:"⠛", h:"⠓", i:"⠊", j:"⠚",
+k:"⠅", l:"⠇", m:"⠍", n:"⠝", o:"⠕",
+p:"⠏", q:"⠟", r:"⠗", s:"⠎", t:"⠞",
+u:"⠥", v:"⠧", w:"⠺", x:"⠭", y:"⠽", z:"⠵",
+" ":" "
+};
+
+// TRADUZIR
+function traduzir() {
+    let texto = document.getElementById("texto").value.toLowerCase();
+    let resultado = "";
+
+    for (let letra of texto) {
+        resultado += brailleMap[letra] || "?";
+    }
+
+    document.getElementById("resultado").innerText = resultado;
+}
+
+</script>
+
+</body>
+</html>
