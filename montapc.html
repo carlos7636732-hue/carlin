@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC Gamer PRO</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: #00ffff;
+    overflow-x: hidden;
+}
+
+/* FUNDO ANIMADO */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 20px;
+    text-shadow: 0 0 10px #00ffff;
+    animation: slide 1s;
+}
+
+/* CONTAINER */
+.container {
+    padding: 15px;
+}
+
+/* CARDS */
+.card {
+    background: rgba(0,0,0,0.8);
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 10px #00ffff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.5s;
+}
+
+.card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card:hover {
+    box-shadow: 0 0 20px #00ffff;
+}
+
+/* INPUT */
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: black;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+}
+
+/* BOTÃO */
+button {
+    background: black;
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 0 15px #00ffff;
+    transform: scale(1.05);
+}
+
+/* RESULTADO */
+#resultado, #fps, #ia {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+/* ANIMAÇÃO */
+@keyframes slide {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<header>
+<h1>🎮 Monte seu PC Gamer PRO</h1>
+<p>IA + FPS + Loja</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h3>🧠 CPU</h3>
+<select id="cpu">
+<option value="1">Ryzen 5</option>
+<option value="2">Ryzen 7</option>
+<option value="3">i7</option>
+</select>
+</div>
+
+<div class="card">
+<h3>🎮 GPU</h3>
+<select id="gpu">
+<option value="1">GTX 1660</option>
+<option value="2">RTX 3060</option>
+<option value="3">RTX 4070</option>
+</select>
+</div>
+
+<div class="card">
+<h3>⚡ RAM</h3>
+<select id="ram">
+<option value="1">8GB</option>
+<option value="2">16GB</option>
+<option value="3">32GB</option>
+</select>
+</div>
+
+<button onclick="calcular()">Calcular 💰</button>
+
+<p id="resultado"></p>
+<p id="fps"></p>
+<p id="ia"></p>
+
+<div class="card">
+<h3>🛒 Comprar</h3>
+<a href="https://www.kabum.com.br" target="_blank">
+<button>Ir para loja</button>
+</a>
+</div>
+
+</div>
+
+<script>
+
+// FUNDO ANIMADO
+let c = document.getElementById("bg");
+let ctx = c.getContext("2d");
+
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+
+let p = [];
+for(let i=0;i<80;i++){
+    p.push({x:Math.random()*c.width,y:Math.random()*c.height});
+}
+
+function bg(){
+    ctx.fillStyle="black";
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle="#00ffff";
+
+    p.forEach(pt=>{
+        ctx.fillRect(pt.x,pt.y,2,2);
+        pt.y+=1;
+        if(pt.y>c.height) pt.y=0;
+    });
+
+    requestAnimationFrame(bg);
+}
+bg();
+
+// CALCULAR
+function calcular(){
+    let total = (cpu.value*500)+(gpu.value*1000)+(ram.value*300);
+    resultado.innerText = "💰 Total: R$ "+total;
+
+    let fpsCalc = cpu.value * gpu.value * 40;
+    fps.innerText = "🎮 FPS médio: "+fpsCalc;
+
+    // IA SIMPLES
+    let texto = "PC básico";
+    if(gpu.value == 3) texto = "🔥 PC Ultra Gamer!";
+    else if(gpu.value == 2) texto = "⚡ PC Gamer Médio";
+
+    ia.innerText = "🤖 IA: "+texto;
+}
+
+// ANIMAÇÃO SCROLL
+function animar(){
+    document.querySelectorAll('.card').forEach(c=>{
+        if(c.getBoundingClientRect().top < window.innerHeight - 50){
+            c.classList.add('show');
+        }
+    });
+}
+
+window.addEventListener('scroll', animar);
+window.onload = animar;
+
+</script>
+
+</body>
+</html>
