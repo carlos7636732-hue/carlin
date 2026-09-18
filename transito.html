@@ -3,321 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trânsito Agora</title>
+
+    <title>Trânsito Seguro</title>
 
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
 
         body {
-            background: #f1f5f9;
-            color: #1e293b;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7f9;
+            color: #1f2937;
+            line-height: 1.6;
         }
 
+        /* Cabeçalho */
         header {
-            background: #0f172a;
+            background: linear-gradient(135deg, #111827, #1e3a8a);
             color: white;
-            padding: 25px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin-bottom: 8px;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 30px auto;
-        }
-
-        /* Painel de situação do trânsito */
-        .status {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-        }
-
-        .status h2 {
-            margin-bottom: 15px;
-        }
-
-        .traffic {
+            padding: 25px 8%;
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
         }
 
-        .traffic button {
-            border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
+        .logo {
+            font-size: 25px;
             font-weight: bold;
         }
 
-        .green {
-            background: #16a34a;
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
         }
 
-        .yellow {
-            background: #eab308;
+        nav a:hover {
+            color: #facc15;
         }
 
-        .red {
-            background: #dc2626;
+        /* Banner principal */
+        .hero {
+            min-height: 430px;
+            padding: 80px 8%;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .55)),
+                url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            color: white;
         }
 
-        /* Formulário */
-        .comment-form {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
             margin-bottom: 25px;
         }
 
-        .comment-form h2 {
-            margin-bottom: 15px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #cbd5e1;
+        .button {
+            display: inline-block;
+            background: #facc15;
+            color: #111827;
+            padding: 13px 24px;
             border-radius: 8px;
-            outline: none;
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .submit {
-            width: 100%;
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 13px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+            text-decoration: none;
             font-weight: bold;
         }
 
-        .submit:hover {
-            background: #1d4ed8;
+        .button:hover {
+            background: #eab308;
         }
 
-        /* Lista de comentários */
-        .comments {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        /* Conteúdo */
+        .container {
+            width: 84%;
+            max-width: 1200px;
+            margin: 50px auto;
         }
 
-        .comment {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
-
-        .comment strong {
-            color: #2563eb;
-        }
-
-        .comment small {
-            display: block;
-            color: #64748b;
-            margin: 6px 0 12px;
-        }
-
-        .like {
-            margin-top: 15px;
-            border: none;
-            background: #e2e8f0;
-            padding: 8px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .like:hover {
-            background: #cbd5e1;
-        }
-
-        footer {
-            margin-top: 40px;
-            padding: 20px;
+        .title {
             text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .title h2 {
+            font-size: 32px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #64748b;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.08);
+        }
+
+        .card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            color: #1e3a8a;
+        }
+
+        /* Área de alerta */
+        .alert {
+            margin-top: 50px;
+            background: #fff7ed;
+            border-left: 6px solid #f97316;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .alert h2 {
+            color: #c2410c;
+            margin-bottom: 10px;
+        }
+
+        /* Dicas */
+        .tips {
+            margin-top: 50px;
             background: #0f172a;
             color: white;
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .tips h2 {
+            margin-bottom: 20px;
+        }
+
+        .tips ul {
+            list-style: none;
+        }
+
+        .tips li {
+            padding: 10px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        /* Frase */
+        .quote {
+            text-align: center;
+            margin: 60px auto;
+            max-width: 800px;
+        }
+
+        .quote p {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        /* Rodapé */
+        footer {
+            background: #111827;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 800px) {
+
+            header {
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 15px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 90%;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- CABEÇALHO -->
     <header>
-        <h1>🚦 Trânsito Agora</h1>
-        <p>Compartilhe informações sobre o trânsito da sua região</p>
+
+        <div class="logo">
+            🚦 Trânsito Seguro
+        </div>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#dicas">Dicas</a>
+            <a href="#seguranca">Segurança</a>
+        </nav>
+
     </header>
 
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="hero" id="inicio">
+
+        <div class="hero-content">
+
+            <h1>
+                Mais atenção no trânsito, mais segurança para todos.
+            </h1>
+
+            <p>
+                Informação e conscientização ajudam motoristas,
+                motociclistas, ciclistas e pedestres a compartilharem
+                as ruas de maneira mais segura e responsável.
+            </p>
+
+            <a href="#dicas" class="button">
+                Ver dicas
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- INFORMAÇÕES -->
     <main class="container">
 
-        <!-- Status atual do trânsito -->
-        <section class="status">
-            <h2>Como está o trânsito?</h2>
-
-            <div class="traffic">
-                <button class="green" onclick="mudarStatus('🟢 Trânsito livre')">
-                    🟢 Livre
-                </button>
-
-                <button class="yellow" onclick="mudarStatus('🟡 Trânsito moderado')">
-                    🟡 Moderado
-                </button>
-
-                <button class="red" onclick="mudarStatus('🔴 Trânsito intenso')">
-                    🔴 Intenso
-                </button>
-            </div>
-
-            <p id="statusAtual" style="margin-top: 15px;">
-                Status: ainda não informado
-            </p>
-        </section>
-
-        <!-- Formulário para novos comentários -->
-        <section class="comment-form">
-            <h2>💬 Deixe seu comentário</h2>
-
-            <form id="commentForm">
-
-                <input
-                    type="text"
-                    id="nome"
-                    placeholder="Seu nome"
-                    required
-                >
-
-                <input
-                    type="text"
-                    id="local"
-                    placeholder="Local do trânsito"
-                    required
-                >
-
-                <textarea
-                    id="mensagem"
-                    placeholder="Ex: Trânsito parado próximo ao centro..."
-                    required
-                ></textarea>
-
-                <button class="submit" type="submit">
-                    Publicar comentário
-                </button>
-
-            </form>
-        </section>
-
-        <!-- Comentários -->
         <section>
-            <h2 style="margin-bottom: 15px;">📢 Comentários recentes</h2>
 
-            <div class="comments" id="comments">
+            <div class="title">
 
-                <article class="comment">
-                    <strong>João</strong>
-                    <small>📍 Centro</small>
+                <h2>
+                    Dirija com responsabilidade
+                </h2>
+
+                <p>
+                    Pequenas atitudes podem fazer uma grande diferença
+                    no trânsito.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <article class="card">
+
+                    <div class="icon">🚗</div>
+
+                    <h3>Respeite os limites</h3>
+
                     <p>
-                        Trânsito bastante tranquilo neste momento.
+                        A velocidade deve ser compatível com a via,
+                        com as condições do trânsito e com o clima.
+                        Reduzir a velocidade aumenta o tempo de reação
+                        e ajuda a evitar acidentes.
                     </p>
 
-                    <button class="like" onclick="curtir(this)">
-                        👍 Curtir <span>0</span>
-                    </button>
                 </article>
 
-                <article class="comment">
-                    <strong>Maria</strong>
-                    <small>📍 Avenida Principal</small>
+
+                <article class="card">
+
+                    <div class="icon">🚦</div>
+
+                    <h3>Respeite a sinalização</h3>
+
                     <p>
-                        Movimento intenso perto do cruzamento.
+                        Semáforos, placas e faixas de sinalização
+                        organizam a circulação. Respeitar essas regras
+                        contribui para um trânsito mais previsível
+                        e seguro.
                     </p>
 
-                    <button class="like" onclick="curtir(this)">
-                        👍 Curtir <span>0</span>
-                    </button>
+                </article>
+
+
+                <article class="card">
+
+                    <div class="icon">📱</div>
+
+                    <h3>Celular e direção não combinam</h3>
+
+                    <p>
+                        Ao dirigir, mantenha sua atenção na via.
+                        Evite utilizar o celular e outras atividades
+                        que possam tirar sua concentração do trânsito.
+                    </p>
+
                 </article>
 
             </div>
+
+        </section>
+
+
+        <!-- ALERTA -->
+        <section class="alert">
+
+            <h2>⚠️ Atenção no trânsito</h2>
+
+            <p>
+                Em dias de chuva, neblina ou baixa visibilidade,
+                redobre a atenção. Reduza a velocidade, aumente
+                a distância do veículo da frente e utilize os
+                equipamentos de iluminação adequados.
+            </p>
+
+        </section>
+
+
+        <!-- DICAS -->
+        <section class="tips" id="dicas">
+
+            <h2>🛣️ Dicas para um trânsito mais seguro</h2>
+
+            <ul>
+
+                <li>
+                    ✅ Use sempre o cinto de segurança.
+                </li>
+
+                <li>
+                    ✅ Mantenha uma distância segura do veículo à frente.
+                </li>
+
+                <li>
+                    ✅ Sinalize suas manobras com antecedência.
+                </li>
+
+                <li>
+                    ✅ Respeite pedestres, ciclistas e motociclistas.
+                </li>
+
+                <li>
+                    ✅ Nunca dirija sob efeito de álcool ou outras substâncias
+                    que comprometam a condução.
+                </li>
+
+                <li>
+                    ✅ Faça pausas durante viagens longas para evitar fadiga.
+                </li>
+
+                <li>
+                    ✅ Antes de sair, confira as condições básicas do veículo.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- SEGURANÇA -->
+        <section class="quote" id="seguranca">
+
+            <p>
+                “Chegar alguns minutos mais cedo nunca é mais importante
+                do que chegar com segurança.”
+            </p>
+
         </section>
 
     </main>
 
+
+    <!-- RODAPÉ -->
     <footer>
-        <p>🚗 Trânsito Agora © 2026</p>
+
+        <p>
+            🚦 Trânsito Seguro © 2026
+        </p>
+
+        <p>
+            Informação, respeito e responsabilidade fazem parte
+            de um trânsito melhor.
+        </p>
+
     </footer>
-
-    <script>
-        // Altera o status exibido na página
-        function mudarStatus(status) {
-            document.getElementById("statusAtual").textContent =
-                "Status: " + status;
-        }
-
-        // Adiciona um novo comentário
-        document.getElementById("commentForm").addEventListener("submit", function(event) {
-
-            // Impede o formulário de recarregar a página
-            event.preventDefault();
-
-            const nome = document.getElementById("nome").value;
-            const local = document.getElementById("local").value;
-            const mensagem = document.getElementById("mensagem").value;
-
-            // Cria o elemento do comentário
-            const novoComentario = document.createElement("article");
-            novoComentario.classList.add("comment");
-
-            novoComentario.innerHTML = `
-                <strong>${nome}</strong>
-                <small>📍 ${local}</small>
-                <p>${mensagem}</p>
-
-                <button class="like" onclick="curtir(this)">
-                    👍 Curtir <span>0</span>
-                </button>
-            `;
-
-            // Coloca o novo comentário no início da lista
-            document.getElementById("comments")
-                .prepend(novoComentario);
-
-            // Limpa o formulário
-            document.getElementById("commentForm").reset();
-        });
-
-        // Sistema simples de curtidas
-        function curtir(botao) {
-            const contador = botao.querySelector("span");
-
-            let numero = Number(contador.textContent);
-            numero++;
-
-            contador.textContent = numero;
-        }
-    </script>
 
 </body>
 </html>
