@@ -4,22 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ViaSegura | Informação e Segurança no Trânsito</title>
-
-    <!-- Fonte moderna -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    <title>Trânsito Seguro - Informação e Segurança</title>
 
     <style>
-
-        /* =====================================================
-           CONFIGURAÇÕES GERAIS
-        ===================================================== */
-
         * {
             margin: 0;
             padding: 0;
@@ -31,1115 +18,487 @@
         }
 
         body {
-            font-family: "Inter", sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-            overflow-x: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.7;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1180px;
-            margin: auto;
-        }
-
-
-        /* =====================================================
-           HEADER
-        ===================================================== */
+        /* =========================
+           CABEÇALHO
+        ========================== */
 
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-
-            background: rgba(8, 15, 31, 0.85);
-            backdrop-filter: blur(15px);
-
-            border-bottom: 1px solid rgba(255,255,255,.08);
-
-            transition: .4s;
-        }
-
-        .header-content {
-            min-height: 75px;
-
+            background: #0f172a;
+            color: white;
+            padding: 18px 7%;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(0,0,0,.25);
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            color: white;
-            font-size: 21px;
-            font-weight: 800;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-
-            display: grid;
-            place-items: center;
-
-            background: #facc15;
-            color: #111827;
-
-            border-radius: 12px;
-
-            box-shadow: 0 0 25px rgba(250,204,21,.3);
+            font-size: 25px;
+            font-weight: bold;
         }
 
         nav {
             display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        nav a {
-            position: relative;
-
-            color: #dbe4f3;
-            font-size: 14px;
-            font-weight: 600;
-
-            transition: .3s;
-        }
-
-        nav a::after {
-            content: "";
-
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-
-            width: 0;
-            height: 2px;
-
-            background: #facc15;
-
-            transition: .3s;
-        }
-
-        nav a:hover {
-            color: white;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-
-        /* =====================================================
-           MENU MOBILE
-        ===================================================== */
-
-        .menu-btn {
-            display: none;
-
-            border: none;
-            background: transparent;
-            color: white;
-
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .hero {
-            min-height: 720px;
-
-            display: flex;
-            align-items: center;
-
-            position: relative;
-
-            color: white;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(5, 12, 27, .95),
-                    rgba(5, 12, 27, .72),
-                    rgba(5, 12, 27, .35)
-                ),
-                url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1800&q=85");
-
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Efeito de luz no fundo */
-        .hero::before {
-            content: "";
-
-            position: absolute;
-            width: 450px;
-            height: 450px;
-
-            background: #2563eb;
-            filter: blur(150px);
-
-            opacity: .25;
-
-            right: -100px;
-            top: 150px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-
-            max-width: 760px;
-
-            animation: aparecer 1s ease;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 9px 15px;
-
-            background: rgba(255,255,255,.1);
-            border: 1px solid rgba(255,255,255,.15);
-
-            border-radius: 50px;
-
-            color: #facc15;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            margin-bottom: 22px;
-
-            backdrop-filter: blur(10px);
-        }
-
-        .pulse {
-            width: 8px;
-            height: 8px;
-
-            background: #22c55e;
-            border-radius: 50%;
-
-            box-shadow: 0 0 0 0 rgba(34,197,94,.7);
-
-            animation: pulse 2s infinite;
-        }
-
-        .hero h1 {
-            font-size: clamp(42px, 6vw, 72px);
-            line-height: 1.05;
-
-            letter-spacing: -2px;
-
-            margin-bottom: 25px;
-        }
-
-        .hero h1 span {
-            color: #facc15;
-        }
-
-        .hero p {
-            max-width: 650px;
-
-            color: #d6deeb;
-
-            font-size: 18px;
-            line-height: 1.8;
-
-            margin-bottom: 32px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
+            gap: 18px;
             flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 15px 23px;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            transition: .3s;
-
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: #facc15;
-            color: #111827;
-
-            box-shadow: 0 10px 30px rgba(250,204,21,.18);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            background: #fde047;
-
-            box-shadow: 0 15px 35px rgba(250,204,21,.3);
-        }
-
-        .btn-outline {
-            border: 1px solid rgba(255,255,255,.25);
+        nav a {
             color: white;
-
-            background: rgba(255,255,255,.06);
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .btn-outline:hover {
-            background: white;
-            color: #111827;
-
-            transform: translateY(-3px);
+        nav a:hover {
+            color: #facc15;
         }
 
+        /* =========================
+           BANNER
+        ========================== */
 
-        /* =====================================================
-           INDICADORES
-        ===================================================== */
-
-        .indicators {
-            position: absolute;
-
-            bottom: -60px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: 90%;
-            max-width: 1000px;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-
-            z-index: 5;
-        }
-
-        .indicator {
-            background: rgba(255,255,255,.96);
-
-            border-radius: 16px;
-
-            padding: 22px;
-
-            box-shadow: 0 15px 50px rgba(15,23,42,.12);
-
+        .hero {
+            min-height: 520px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            padding: 70px 8%;
 
-            transition: .3s;
+            background:
+                linear-gradient(
+                    rgba(15, 23, 42, .78),
+                    rgba(15, 23, 42, .78)
+                ),
+                url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1800&q=80");
+
+            background-size: cover;
+            background-position: center;
+            color: white;
         }
 
-        .indicator:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 20px 60px rgba(15,23,42,.17);
+        .hero-content {
+            max-width: 850px;
         }
 
-        .indicator-icon {
-            width: 48px;
-            height: 48px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 13px;
-
-            font-size: 22px;
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            margin-bottom: 20px;
         }
 
-        .green-bg {
-            background: #dcfce7;
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
         }
 
-        .yellow-bg {
-            background: #fef9c3;
+        .button {
+            display: inline-block;
+            background: #facc15;
+            color: #111827;
+            padding: 13px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .blue-bg {
-            background: #dbeafe;
+        .button:hover {
+            background: #eab308;
         }
 
-        .indicator strong {
-            display: block;
-            margin-bottom: 4px;
+        /* =========================
+           CONTAINER
+        ========================== */
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 55px auto;
         }
 
-        .indicator small {
+        section {
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
             color: #64748b;
         }
 
+        /* =========================
+           INTRODUÇÃO
+        ========================== */
 
-        /* =====================================================
-           SEÇÕES
-        ===================================================== */
-
-        section {
-            scroll-margin-top: 100px;
+        .intro {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.07);
         }
 
-        .section {
-            padding: 110px 0 70px;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 680px;
-
-            margin: 0 auto 50px;
-        }
-
-        .section-label {
-            color: #2563eb;
-
-            text-transform: uppercase;
-
-            font-size: 12px;
-            font-weight: 800;
-
-            letter-spacing: 2px;
-
-            margin-bottom: 12px;
-        }
-
-        .section-header h2 {
-            font-size: 38px;
-            letter-spacing: -1px;
-
+        .intro h2 {
+            color: #1d4ed8;
             margin-bottom: 15px;
         }
 
-        .section-header p {
-            color: #64748b;
-            line-height: 1.8;
+        .intro p {
+            margin-bottom: 15px;
         }
 
-
-        /* =====================================================
+        /* =========================
            CARDS
-        ===================================================== */
+        ========================== */
 
         .cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-
             gap: 22px;
         }
 
         .card {
-            position: relative;
-            overflow: hidden;
-
             background: white;
-
-            padding: 32px;
-
-            border-radius: 18px;
-
-            border: 1px solid #e8edf5;
-
-            transition: .4s;
-
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .card.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card::before {
-            content: "";
-
-            position: absolute;
-
-            width: 120px;
-            height: 120px;
-
-            border-radius: 50%;
-
-            background: #2563eb;
-
-            right: -60px;
-            top: -60px;
-
-            opacity: .05;
-
-            transition: .4s;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
+            transition: .3s;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: #bfdbfe;
-
-            box-shadow: 0 20px 50px rgba(37,99,235,.10);
+            transform: translateY(-5px);
         }
 
-        .card:hover::before {
-            transform: scale(2);
-        }
-
-        .card-icon {
-            width: 58px;
-            height: 58px;
-
-            display: grid;
-            place-items: center;
-
-            background: #eff6ff;
-
-            border-radius: 15px;
-
-            font-size: 27px;
-
-            margin-bottom: 22px;
-        }
-
-        .card h3 {
-            font-size: 19px;
+        .icon {
+            font-size: 42px;
             margin-bottom: 12px;
         }
 
-        .card p {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.8;
+        .card h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
         }
 
-
-        /* =====================================================
-           ALERTA
-        ===================================================== */
+        /* =========================
+           ALERTAS
+        ========================== */
 
         .alert {
-            position: relative;
-            overflow: hidden;
-
-            background: linear-gradient(135deg, #111827, #172554);
-
-            color: white;
-
-            padding: 45px;
-
-            border-radius: 22px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 30px;
-
-            box-shadow: 0 20px 60px rgba(15,23,42,.15);
-        }
-
-        .alert::after {
-            content: "";
-
-            position: absolute;
-
-            width: 250px;
-            height: 250px;
-
-            border-radius: 50%;
-
-            background: #2563eb;
-
-            filter: blur(80px);
-
-            right: -80px;
-            bottom: -120px;
-
-            opacity: .4;
-        }
-
-        .alert-content {
-            position: relative;
-            z-index: 2;
+            background: #fff7ed;
+            border-left: 6px solid #f97316;
+            padding: 28px;
+            border-radius: 10px;
         }
 
         .alert h2 {
-            font-size: 27px;
+            color: #c2410c;
             margin-bottom: 10px;
         }
 
-        .alert p {
-            max-width: 700px;
-            color: #cbd5e1;
-            line-height: 1.8;
+        .danger {
+            background: #fef2f2;
+            border-left: 6px solid #dc2626;
+            padding: 28px;
+            border-radius: 10px;
         }
 
-        .alert-icon {
-            position: relative;
-            z-index: 2;
-
-            font-size: 60px;
-
-            animation: flutuar 3s ease-in-out infinite;
+        .danger h2 {
+            color: #b91c1c;
+            margin-bottom: 10px;
         }
 
-
-        /* =====================================================
-           ESTATÍSTICAS
-        ===================================================== */
-
-        .stats {
-            background: #0b1220;
-            color: white;
-
-            padding: 80px 0;
+        .safe {
+            background: #f0fdf4;
+            border-left: 6px solid #16a34a;
+            padding: 28px;
+            border-radius: 10px;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-
-            text-align: center;
+        .safe h2 {
+            color: #15803d;
+            margin-bottom: 10px;
         }
 
-        .stat {
-            padding: 20px;
+        /* =========================
+           LISTAS
+        ========================== */
 
-            border-right: 1px solid rgba(255,255,255,.1);
+        .info-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
         }
 
-        .stat:last-child {
-            border-right: none;
+        .info-box h3 {
+            color: #1e3a8a;
+            margin: 20px 0 8px;
         }
 
-        .stat strong {
-            display: block;
+        .info-box ul {
+            padding-left: 25px;
+        }
 
-            font-size: 38px;
-
-            color: #facc15;
-
+        .info-box li {
             margin-bottom: 8px;
         }
 
-        .stat span {
-            color: #94a3b8;
-            font-size: 13px;
-        }
+        /* =========================
+           TABELA
+        ========================== */
 
-
-        /* =====================================================
-           DICAS
-        ===================================================== */
-
-        .tips-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            gap: 20px;
-        }
-
-        .tip {
-            display: flex;
-            gap: 18px;
-
+        .table-container {
+            overflow-x: auto;
             background: white;
-
-            padding: 25px;
-
             border-radius: 15px;
-
-            border: 1px solid #e8edf5;
-
-            transition: .3s;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
         }
 
-        .tip:hover {
-            transform: translateX(5px);
-            border-color: #bfdbfe;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .tip-number {
-            min-width: 42px;
-            height: 42px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 10px;
-
-            background: #eff6ff;
-            color: #2563eb;
-
-            font-weight: 800;
-        }
-
-        .tip h3 {
-            margin-bottom: 5px;
-        }
-
-        .tip p {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-
-        /* =====================================================
-           CTA
-        ===================================================== */
-
-        .cta {
-            text-align: center;
-
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-
+        th {
+            background: #1e3a8a;
             color: white;
-
-            padding: 70px 30px;
-
-            border-radius: 25px;
-
-            margin-bottom: 80px;
-
-            box-shadow: 0 25px 60px rgba(37,99,235,.25);
+            padding: 15px;
+            text-align: left;
         }
 
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .cta p {
-            color: #dbeafe;
-            margin-bottom: 25px;
+        tr:hover {
+            background: #f8fafc;
         }
 
-        .cta .btn {
+        /* =========================
+           FRASE
+        ========================== */
+
+        .quote {
+            background: #0f172a;
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            border-radius: 18px;
+        }
+
+        .quote p {
+            font-size: 28px;
+            font-weight: bold;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        /* =========================
+           FAQ
+        ========================== */
+
+        .faq {
             background: white;
-            color: #1d4ed8;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
         }
 
+        .faq details {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
 
-        /* =====================================================
-           FOOTER
-        ===================================================== */
+        .faq summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .faq p {
+            margin-top: 12px;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================== */
 
         footer {
-            background: #070d18;
-
-            color: #94a3b8;
-
-            padding: 45px 0;
+            background: #020617;
+            color: #cbd5e1;
+            padding: 45px 8%;
+            text-align: center;
         }
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .footer-logo {
+        footer h2 {
             color: white;
-            font-size: 20px;
-            font-weight: 800;
-
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
-        .footer-text {
-            max-width: 400px;
-            font-size: 13px;
-            line-height: 1.8;
+        footer p {
+            margin-bottom: 8px;
         }
 
-        .copyright {
-            border-top: 1px solid rgba(255,255,255,.08);
-
-            margin-top: 30px;
-            padding-top: 25px;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================================
-           BOTÃO VOLTAR AO TOPO
-        ===================================================== */
-
-        #topButton {
-            position: fixed;
-
-            right: 25px;
-            bottom: 25px;
-
-            width: 48px;
-            height: 48px;
-
-            border: none;
-            border-radius: 50%;
-
-            background: #2563eb;
-            color: white;
-
-            cursor: pointer;
-
-            font-size: 20px;
-
-            opacity: 0;
-            visibility: hidden;
-
-            transition: .3s;
-
-            z-index: 999;
-        }
-
-        #topButton.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #topButton:hover {
-            transform: translateY(-4px);
-            background: #1d4ed8;
-        }
-
-
-        /* =====================================================
-           ANIMAÇÕES
-        ===================================================== */
-
-        @keyframes aparecer {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(34,197,94,.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(34,197,94,0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(34,197,94,0);
-            }
-        }
-
-        @keyframes flutuar {
-            0%, 100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-
-
-        /* =====================================================
+        /* =========================
            RESPONSIVIDADE
-        ===================================================== */
+        ========================== */
 
         @media (max-width: 900px) {
 
-            nav {
-                position: absolute;
-
-                top: 75px;
-                left: 0;
-
-                width: 100%;
-
-                padding: 25px;
-
-                background: #0b1220;
-
-                display: none;
-
+            header {
                 flex-direction: column;
-
-                align-items: flex-start;
-
-                gap: 20px;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            .menu-btn {
-                display: block;
-            }
-
-            .indicators {
-                position: relative;
-
-                bottom: auto;
-
-                margin-top: -50px;
+                gap: 15px;
             }
 
             .cards {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .stat:nth-child(2) {
-                border-right: none;
-            }
-
-            .stat {
-                border-bottom: 1px solid rgba(255,255,255,.1);
-            }
-
-            .tips-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 40px;
             }
         }
 
         @media (max-width: 600px) {
 
-            .hero {
-                min-height: 680px;
-            }
-
-            .hero h1 {
-                letter-spacing: -1px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .indicators {
-                grid-template-columns: 1fr;
-                margin-top: 20px;
-            }
-
-            .section {
-                padding-top: 80px;
-            }
-
             .cards {
                 grid-template-columns: 1fr;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .hero {
+                min-height: 450px;
             }
 
-            .stat {
-                border-right: none;
+            .hero h1 {
+                font-size: 34px;
             }
 
-            .alert {
-                padding: 30px;
-                flex-direction: column;
-                align-items: flex-start;
+            .hero p {
+                font-size: 17px;
             }
 
-            .cta h2 {
-                font-size: 28px;
+            .container {
+                width: 92%;
+            }
+
+            nav {
+                justify-content: center;
             }
         }
-
     </style>
 </head>
 
-
 <body>
 
-    <!-- =====================================================
+    <!-- =========================
          CABEÇALHO
-    ====================================================== -->
+    ========================== -->
 
-    <header id="header">
+    <header>
 
-        <div class="container header-content">
-
-            <a href="#inicio" class="logo">
-
-                <div class="logo-icon">
-                    🚦
-                </div>
-
-                ViaSegura
-
-            </a>
-
-
-            <button class="menu-btn" id="menuBtn">
-                ☰
-            </button>
-
-
-            <nav id="menu">
-
-                <a href="#inicio">Início</a>
-                <a href="#informacoes">Informações</a>
-                <a href="#dicas">Dicas</a>
-                <a href="#seguranca">Segurança</a>
-
-            </nav>
-
+        <div class="logo">
+            🚦 Trânsito Seguro
         </div>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#seguranca">Segurança</a>
+            <a href="#motoristas">Motoristas</a>
+            <a href="#pedestres">Pedestres</a>
+            <a href="#dicas">Dicas</a>
+            <a href="#faq">FAQ</a>
+        </nav>
 
     </header>
 
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
+    <!-- =========================
+         BANNER PRINCIPAL
+    ========================== -->
 
     <section class="hero" id="inicio">
 
-        <div class="container">
+        <div class="hero-content">
 
-            <div class="hero-content">
+            <h1>
+                Informação para um trânsito mais seguro
+            </h1>
 
-                <div class="badge">
-                    <span class="pulse"></span>
-                    Informação em primeiro lugar
-                </div>
+            <p>
+                O trânsito é um espaço compartilhado por milhões de pessoas.
+                Motoristas, motociclistas, ciclistas e pedestres precisam
+                agir com atenção, respeito e responsabilidade para que todos
+                possam chegar ao seu destino com segurança.
+            </p>
 
-
-                <h1>
-                    Um trânsito mais
-                    <span>seguro</span>
-                    começa com você.
-                </h1>
-
-
-                <p>
-                    Informação, respeito e atenção são fundamentais
-                    para construir ruas mais seguras. Conheça boas
-                    práticas para motoristas, motociclistas, ciclistas
-                    e pedestres.
-                </p>
-
-
-                <div class="buttons">
-
-                    <a href="#dicas" class="btn btn-primary">
-                        🚗 Conhecer dicas
-                    </a>
-
-                    <a href="#informacoes" class="btn btn-outline">
-                        Saiba mais →
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Indicadores -->
-
-        <div class="indicators">
-
-            <div class="indicator">
-
-                <div class="indicator-icon green-bg">
-                    🟢
-                </div>
-
-                <div>
-                    <strong>Atenção</strong>
-                    <small>Dirija com responsabilidade</small>
-                </div>
-
-            </div>
-
-
-            <div class="indicator">
-
-                <div class="indicator-icon yellow-bg">
-                    ⚠️
-                </div>
-
-                <div>
-                    <strong>Prevenção</strong>
-                    <small>Antecipe situações de risco</small>
-                </div>
-
-            </div>
-
-
-            <div class="indicator">
-
-                <div class="indicator-icon blue-bg">
-                    🛡️
-                </div>
-
-                <div>
-                    <strong>Segurança</strong>
-                    <small>Proteja você e os outros</small>
-                </div>
-
-            </div>
+            <a href="#seguranca" class="button">
+                Conheça as dicas
+            </a>
 
         </div>
 
     </section>
 
 
-    <!-- =====================================================
-         INFORMAÇÕES
-    ====================================================== -->
+    <main class="container">
 
-    <section class="section" id="informacoes">
+        <!-- =========================
+             INTRODUÇÃO
+        ========================== -->
 
-        <div class="container">
+        <section class="intro">
 
-            <div class="section-header">
+            <h2>🚗 Por que falar sobre trânsito?</h2>
 
-                <div class="section-label">
-                    Informação
-                </div>
+            <p>
+                O trânsito faz parte da vida cotidiana. Todos os dias usamos
+                ruas, avenidas, rodovias e estradas para trabalhar, estudar,
+                viajar e realizar nossas atividades.
+            </p>
 
-                <h2>
-                    Atitudes que fazem a diferença
-                </h2>
+            <p>
+                Um trânsito seguro depende de infraestrutura adequada,
+                fiscalização, educação e, principalmente, da colaboração
+                de todos os usuários das vias.
+            </p>
+
+            <p>
+                Ter atenção, respeitar a sinalização e compreender que cada
+                pessoa possui necessidades diferentes são atitudes importantes
+                para melhorar a convivência no trânsito.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             PRINCIPAIS TEMAS
+        ========================== -->
+
+        <section id="seguranca">
+
+            <div class="section-title">
+
+                <h2>🛡️ Segurança no trânsito</h2>
 
                 <p>
-                    Um trânsito organizado depende da colaboração
-                    de todos. Pequenas atitudes podem ajudar a tornar
-                    a circulação mais segura e previsível.
+                    Atitudes simples podem ajudar a reduzir situações de risco.
                 </p>
 
             </div>
@@ -1149,18 +508,14 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        🚗
-                    </div>
+                    <div class="icon">🚦</div>
 
-                    <h3>
-                        Velocidade adequada
-                    </h3>
+                    <h3>Respeite a sinalização</h3>
 
                     <p>
-                        Mantenha uma velocidade compatível com a via,
-                        com o fluxo de veículos e com as condições
-                        do ambiente.
+                        Observe placas, semáforos, faixas e marcas no
+                        pavimento. A sinalização orienta os usuários
+                        e ajuda a organizar o fluxo de veículos e pessoas.
                     </p>
 
                 </article>
@@ -1168,18 +523,15 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        📱
-                    </div>
+                    <div class="icon">📱</div>
 
-                    <h3>
-                        Atenção total
-                    </h3>
+                    <h3>Evite distrações</h3>
 
                     <p>
-                        Evite distrações durante a condução. Manter
-                        os olhos e a atenção na via ajuda a perceber
-                        situações inesperadas.
+                        Ao conduzir um veículo, mantenha sua atenção
+                        na via. Celular, conversas intensas e outras
+                        distrações podem reduzir sua capacidade de reagir
+                        a acontecimentos inesperados.
                     </p>
 
                 </article>
@@ -1187,18 +539,14 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        🚦
-                    </div>
+                    <div class="icon">🪖</div>
 
-                    <h3>
-                        Respeito à sinalização
-                    </h3>
+                    <h3>Use equipamentos de proteção</h3>
 
                     <p>
-                        Placas, semáforos e faixas orientam todos os
-                        usuários da via. Respeitar a sinalização
-                        melhora a organização do trânsito.
+                        Motociclistas devem utilizar capacete adequado
+                        e corretamente afivelado. Em veículos, todos os
+                        ocupantes devem utilizar o cinto de segurança.
                     </p>
 
                 </article>
@@ -1206,18 +554,14 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        🛵
-                    </div>
+                    <div class="icon">🚗</div>
 
-                    <h3>
-                        Cuidado com motociclistas
-                    </h3>
+                    <h3>Mantenha distância</h3>
 
                     <p>
-                        Mantenha distância segura e confira os pontos
-                        cegos antes de mudar de faixa ou realizar
-                        qualquer manobra.
+                        Deixe espaço suficiente entre seu veículo e o
+                        veículo da frente. Essa distância proporciona
+                        mais tempo para reagir diante de uma frenagem.
                     </p>
 
                 </article>
@@ -1225,18 +569,14 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        🚶
-                    </div>
+                    <div class="icon">🌧️</div>
 
-                    <h3>
-                        Respeito ao pedestre
-                    </h3>
+                    <h3>Atenção durante a chuva</h3>
 
                     <p>
-                        Dê atenção especial às travessias e reduza a
-                        velocidade em locais com grande circulação
-                        de pedestres.
+                        Com chuva, a visibilidade pode diminuir e o
+                        pavimento pode ficar escorregadio. Reduza a
+                        velocidade e aumente a distância de segurança.
                     </p>
 
                 </article>
@@ -1244,8 +584,568 @@
 
                 <article class="card">
 
-                    <div class="card-icon">
-                        🌧️
-                    </div>
+                    <div class="icon">😴</div>
 
-                    <h3>
+                    <h3>Evite dirigir cansado</h3>
+
+                    <p>
+                        O cansaço pode prejudicar a atenção e o tempo
+                        de reação. Em viagens longas, faça pausas em
+                        locais apropriados para descansar.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MOTORISTAS
+        ========================== -->
+
+        <section id="motoristas">
+
+            <div class="section-title">
+
+                <h2>🚘 Informações para motoristas</h2>
+
+                <p>
+                    Condução responsável começa antes mesmo de ligar o veículo.
+                </p>
+
+            </div>
+
+            <div class="info-box">
+
+                <h3>Antes de sair</h3>
+
+                <p>
+                    Antes de iniciar o trajeto, verifique as condições
+                    básicas do veículo. Pneus, iluminação, freios,
+                    limpadores de para-brisa e outros componentes devem
+                    estar em condições adequadas de funcionamento.
+                </p>
+
+
+                <h3>Durante a condução</h3>
+
+                <p>
+                    Mantenha as duas mãos disponíveis para controlar
+                    o veículo sempre que possível, observe os retrovisores
+                    e mantenha atenção constante ao ambiente ao redor.
+                </p>
+
+
+                <h3>Ultrapassagens</h3>
+
+                <p>
+                    Uma ultrapassagem deve ser realizada somente quando
+                    houver condições seguras e visibilidade suficiente.
+                    Nunca force uma manobra apenas para ganhar alguns
+                    segundos no percurso.
+                </p>
+
+
+                <h3>Velocidade</h3>
+
+                <p>
+                    Respeite os limites estabelecidos para cada via e
+                    adapte a velocidade às condições do trânsito, do
+                    clima, da iluminação e do pavimento.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PEDESTRES
+        ========================== -->
+
+        <section id="pedestres">
+
+            <div class="section-title">
+
+                <h2>🚶 Segurança dos pedestres</h2>
+
+                <p>
+                    Quem está a pé também faz parte do trânsito.
+                </p>
+
+            </div>
+
+            <div class="safe">
+
+                <h2>✅ Atenção e respeito</h2>
+
+                <p>
+                    Pedestres devem procurar utilizar locais apropriados
+                    para atravessar e observar o movimento dos veículos.
+                    Motoristas devem manter atenção especial em faixas,
+                    cruzamentos, escolas, hospitais e áreas com grande
+                    circulação de pessoas.
+                </p>
+
+                <p>
+                    Crianças, idosos e pessoas com mobilidade reduzida
+                    podem precisar de mais tempo para atravessar.
+                    Paciência e respeito são fundamentais.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MOTOCICLISTAS
+        ========================== -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>🏍️ Segurança para motociclistas</h2>
+
+            </div>
+
+            <div class="cards">
+
+                <article class="card">
+
+                    <h3>Capacete</h3>
+
+                    <p>
+                        Utilize capacete adequado, em boas condições e
+                        corretamente ajustado e afivelado.
+                    </p>
+
+                </article>
+
+                <article class="card">
+
+                    <h3>Visibilidade</h3>
+
+                    <p>
+                        Mantenha iluminação e sinalização da motocicleta
+                        em condições adequadas e procure tornar sua
+                        presença perceptível aos demais usuários.
+                    </p>
+
+                </article>
+
+                <article class="card">
+
+                    <h3>Distância</h3>
+
+                    <p>
+                        Evite permanecer excessivamente próximo de outros
+                        veículos. Tenha espaço para reagir a mudanças
+                        repentinas no fluxo.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CICLISTAS
+        ========================== -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>🚲 Segurança para ciclistas</h2>
+
+            </div>
+
+            <div class="info-box">
+
+                <p>
+                    A bicicleta também é um meio de transporte e o ciclista
+                    deve receber atenção e respeito no trânsito.
+                </p>
+
+                <ul>
+                    <li>Utilize equipamentos de segurança apropriados.</li>
+                    <li>Mantenha sua bicicleta em boas condições.</li>
+                    <li>Observe a sinalização e as regras aplicáveis.</li>
+                    <li>Tenha atenção em cruzamentos e conversões.</li>
+                    <li>Evite circular em locais onde você não tenha visibilidade.</li>
+                    <li>Motoristas devem manter espaço seguro ao ultrapassar bicicletas.</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CHUVA
+        ========================== -->
+
+        <section>
+
+            <div class="alert">
+
+                <h2>🌧️ Trânsito em dias de chuva</h2>
+
+                <p>
+                    A chuva pode mudar rapidamente as condições de circulação.
+                    A pista pode ficar escorregadia, a visibilidade pode diminuir
+                    e poças podem esconder irregularidades no pavimento.
+                </p>
+
+                <p>
+                    Nessas situações, reduza a velocidade, aumente a distância
+                    entre veículos e utilize corretamente os equipamentos de
+                    iluminação. Evite movimentos bruscos e redobre a atenção.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ÁLCOOL
+        ========================== -->
+
+        <section>
+
+            <div class="danger">
+
+                <h2>🚫 Álcool e direção</h2>
+
+                <p>
+                    Se consumir bebida alcoólica, não conduza. O álcool pode
+                    comprometer a percepção, a coordenação motora, o julgamento
+                    e o tempo de reação.
+                </p>
+
+                <p>
+                    Planeje uma forma segura de voltar para casa e nunca
+                    pressione outra pessoa a dirigir depois de beber.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MANUTENÇÃO
+        ========================== -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>🔧 Manutenção preventiva</h2>
+
+                <p>
+                    Um veículo bem cuidado ajuda a evitar problemas durante o trajeto.
+                </p>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Por que observar?</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Pneus</td>
+                            <td>
+                                Verificar condições gerais, desgaste e calibragem
+                                conforme as recomendações do fabricante.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Freios</td>
+                            <td>
+                                O sistema precisa estar em boas condições para
+                                permitir frenagens adequadas.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Faróis e lanternas</td>
+                            <td>
+                                A iluminação ajuda na visibilidade e na comunicação
+                                das intenções do veículo.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Palhetas</td>
+                            <td>
+                                Limpadores em boas condições ajudam a manter
+                                a visibilidade durante a chuva.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Fluidos</td>
+                            <td>
+                                Observe os níveis e siga as orientações do
+                                fabricante para manutenção.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             VIAGENS
+        ========================== -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h2>🛣️ Dicas para viagens</h2>
+
+            </div>
+
+            <div class="info-box">
+
+                <ul>
+
+                    <li>
+                        Planeje o caminho antes de iniciar a viagem.
+                    </li>
+
+                    <li>
+                        Verifique as condições do veículo.
+                    </li>
+
+                    <li>
+                        Confira as condições climáticas e de circulação.
+                    </li>
+
+                    <li>
+                        Faça pausas durante viagens longas.
+                    </li>
+
+                    <li>
+                        Mantenha todos os ocupantes utilizando o cinto.
+                    </li>
+
+                    <li>
+                        Não ultrapasse os limites de velocidade.
+                    </li>
+
+                    <li>
+                        Evite dirigir com sono ou muito cansado.
+                    </li>
+
+                    <li>
+                        Mantenha documentos e itens necessários organizados.
+                    </li>
+
+                    <li>
+                        Tenha paciência em congestionamentos e áreas de obras.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACIDENTES
+        ========================== -->
+
+        <section>
+
+            <div class="danger">
+
+                <h2>🚨 Em caso de acidente</h2>
+
+                <p>
+                    Em uma ocorrência de trânsito, procure manter a calma
+                    e priorize a segurança das pessoas envolvidas.
+                </p>
+
+                <p>
+                    Quando for seguro fazê-lo, sinalize o local para alertar
+                    outros usuários da via e procure ajuda dos serviços de
+                    emergência apropriados.
+                </p>
+
+                <p>
+                    Evite movimentar pessoas feridas, a menos que exista
+                    um perigo imediato que exija retirar alguém do local.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FRASE
+        ========================== -->
+
+        <section class="quote">
+
+            <p>
+                “No trânsito, cada escolha importa.
+                Respeito, atenção e responsabilidade ajudam
+                todos a chegar ao seu destino.”
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             FAQ
+        ========================== -->
+
+        <section id="faq">
+
+            <div class="section-title">
+
+                <h2>❓ Perguntas frequentes</h2>
+
+                <p>
+                    Algumas dúvidas comuns sobre segurança no trânsito.
+                </p>
+
+            </div>
+
+
+            <div class="faq">
+
+                <details>
+                    <summary>Por que manter distância do veículo da frente?</summary>
+
+                    <p>
+                        Porque uma distância adequada proporciona mais tempo
+                        para perceber uma frenagem ou outro acontecimento
+                        inesperado e tomar uma decisão segura.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>O que fazer quando começa a chover?</summary>
+
+                    <p>
+                        Reduza a velocidade, aumente a distância de segurança,
+                        mantenha boa visibilidade e evite manobras bruscas.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Por que não devemos usar o celular dirigindo?</summary>
+
+                    <p>
+                        Porque o uso do celular pode desviar a atenção da via
+                        e diminuir a capacidade de perceber situações de risco.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>Como ajudar a melhorar o trânsito?</summary>
+
+                    <p>
+                        Respeitando a sinalização, tendo paciência, utilizando
+                        corretamente as vias e respeitando os demais usuários,
+                        incluindo pedestres, ciclistas e motociclistas.
+                    </p>
+                </details>
+
+
+                <details>
+                    <summary>O que é direção defensiva?</summary>
+
+                    <p>
+                        É uma forma de conduzir buscando antecipar situações
+                        de risco e adotar comportamentos que reduzam a
+                        possibilidade de acidentes.
+                    </p>
+                </details>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MENSAGEM FINAL
+        ========================== -->
+
+        <section class="safe">
+
+            <h2>💚 Um trânsito melhor depende de todos</h2>
+
+            <p>
+                Não importa se você está dirigindo um carro, pilotando uma
+                motocicleta, andando de bicicleta ou caminhando. Todos
+                participamos do trânsito.
+            </p>
+
+            <p>
+                Respeitar as regras, prestar atenção e considerar as outras
+                pessoas são atitudes que contribuem para uma convivência
+                mais segura e tranquila nas ruas e estradas.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+    ========================== -->
+
+    <footer>
+
+        <h2>🚦 Trânsito Seguro</h2>
+
+        <p>
+            Informação e conscientização para uma mobilidade mais segura.
+        </p>
+
+        <p>
+            Respeite. Tenha atenção. Preserve vidas.
+        </p>
+
+        <p>
+            © 2026 Trânsito Seguro - Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+</body>
+</html>
