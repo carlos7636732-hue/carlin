@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trânsito Agora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        header {
+            background: #0f172a;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        /* Painel de situação do trânsito */
+        .status {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .status h2 {
+            margin-bottom: 15px;
+        }
+
+        .traffic {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .traffic button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .green {
+            background: #16a34a;
+        }
+
+        .yellow {
+            background: #eab308;
+        }
+
+        .red {
+            background: #dc2626;
+        }
+
+        /* Formulário */
+        .comment-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .comment-form h2 {
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .submit:hover {
+            background: #1d4ed8;
+        }
+
+        /* Lista de comentários */
+        .comments {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .comment strong {
+            color: #2563eb;
+        }
+
+        .comment small {
+            display: block;
+            color: #64748b;
+            margin: 6px 0 12px;
+        }
+
+        .like {
+            margin-top: 15px;
+            border: none;
+            background: #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .like:hover {
+            background: #cbd5e1;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            background: #0f172a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🚦 Trânsito Agora</h1>
+        <p>Compartilhe informações sobre o trânsito da sua região</p>
+    </header>
+
+    <main class="container">
+
+        <!-- Status atual do trânsito -->
+        <section class="status">
+            <h2>Como está o trânsito?</h2>
+
+            <div class="traffic">
+                <button class="green" onclick="mudarStatus('🟢 Trânsito livre')">
+                    🟢 Livre
+                </button>
+
+                <button class="yellow" onclick="mudarStatus('🟡 Trânsito moderado')">
+                    🟡 Moderado
+                </button>
+
+                <button class="red" onclick="mudarStatus('🔴 Trânsito intenso')">
+                    🔴 Intenso
+                </button>
+            </div>
+
+            <p id="statusAtual" style="margin-top: 15px;">
+                Status: ainda não informado
+            </p>
+        </section>
+
+        <!-- Formulário para novos comentários -->
+        <section class="comment-form">
+            <h2>💬 Deixe seu comentário</h2>
+
+            <form id="commentForm">
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Seu nome"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="local"
+                    placeholder="Local do trânsito"
+                    required
+                >
+
+                <textarea
+                    id="mensagem"
+                    placeholder="Ex: Trânsito parado próximo ao centro..."
+                    required
+                ></textarea>
+
+                <button class="submit" type="submit">
+                    Publicar comentário
+                </button>
+
+            </form>
+        </section>
+
+        <!-- Comentários -->
+        <section>
+            <h2 style="margin-bottom: 15px;">📢 Comentários recentes</h2>
+
+            <div class="comments" id="comments">
+
+                <article class="comment">
+                    <strong>João</strong>
+                    <small>📍 Centro</small>
+                    <p>
+                        Trânsito bastante tranquilo neste momento.
+                    </p>
+
+                    <button class="like" onclick="curtir(this)">
+                        👍 Curtir <span>0</span>
+                    </button>
+                </article>
+
+                <article class="comment">
+                    <strong>Maria</strong>
+                    <small>📍 Avenida Principal</small>
+                    <p>
+                        Movimento intenso perto do cruzamento.
+                    </p>
+
+                    <button class="like" onclick="curtir(this)">
+                        👍 Curtir <span>0</span>
+                    </button>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>🚗 Trânsito Agora © 2026</p>
+    </footer>
+
+    <script>
+        // Altera o status exibido na página
+        function mudarStatus(status) {
+            document.getElementById("statusAtual").textContent =
+                "Status: " + status;
+        }
+
+        // Adiciona um novo comentário
+        document.getElementById("commentForm").addEventListener("submit", function(event) {
+
+            // Impede o formulário de recarregar a página
+            event.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const local = document.getElementById("local").value;
+            const mensagem = document.getElementById("mensagem").value;
+
+            // Cria o elemento do comentário
+            const novoComentario = document.createElement("article");
+            novoComentario.classList.add("comment");
+
+            novoComentario.innerHTML = `
+                <strong>${nome}</strong>
+                <small>📍 ${local}</small>
+                <p>${mensagem}</p>
+
+                <button class="like" onclick="curtir(this)">
+                    👍 Curtir <span>0</span>
+                </button>
+            `;
+
+            // Coloca o novo comentário no início da lista
+            document.getElementById("comments")
+                .prepend(novoComentario);
+
+            // Limpa o formulário
+            document.getElementById("commentForm").reset();
+        });
+
+        // Sistema simples de curtidas
+        function curtir(botao) {
+            const contador = botao.querySelector("span");
+
+            let numero = Number(contador.textContent);
+            numero++;
+
+            contador.textContent = numero;
+        }
+    </script>
+
+</body>
+</html>
