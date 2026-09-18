@@ -401,10 +401,291 @@
                 justify-content: center;
             }
         }
+
+        /* =========================
+           EFEITOS EXTRAS
+        ========================== */
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Barra de progresso da página */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #facc15;
+            z-index: 2000;
+            box-shadow: 0 0 12px rgba(250,204,21,.8);
+        }
+
+        /* Aparição suave ao rolar */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero com movimento suave */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background-attachment: fixed;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(2px);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .hero::before {
+            width: 180px;
+            height: 180px;
+            right: 8%;
+            top: 18%;
+            border: 2px solid rgba(250,204,21,.25);
+            box-shadow: 0 0 35px rgba(250,204,21,.15);
+        }
+
+        .hero::after {
+            width: 90px;
+            height: 90px;
+            right: 25%;
+            bottom: 12%;
+            background: rgba(250,204,21,.08);
+            animation-delay: -2s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: heroEnter 1s ease both;
+        }
+
+        .hero h1 {
+            animation: glowText 3s ease-in-out infinite alternate;
+        }
+
+        /* Botão com brilho */
+        .button {
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+            box-shadow: 0 5px 18px rgba(250,204,21,.18);
+        }
+
+        .button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 28px rgba(250,204,21,.35);
+        }
+
+        .button::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+            transform: skewX(-20deg);
+            transition: left .6s ease;
+        }
+
+        .button:hover::after {
+            left: 140%;
+        }
+
+        /* Cards mais modernos */
+        .card {
+            position: relative;
+            overflow: hidden;
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+            border: 1px solid transparent;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(250,204,21,.12), transparent 45%);
+            opacity: 0;
+            transition: opacity .35s ease;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(15,23,42,.15);
+            border-color: rgba(250,204,21,.45);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .icon {
+            display: inline-block;
+            transition: transform .35s ease;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.18) rotate(-5deg);
+            animation: iconBounce .55s ease;
+        }
+
+        /* Caixas de informação */
+        .intro,
+        .info-box,
+        .alert,
+        .danger,
+        .safe,
+        .faq,
+        .table-container,
+        .quote {
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .intro:hover,
+        .info-box:hover,
+        .alert:hover,
+        .danger:hover,
+        .safe:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(15,23,42,.12);
+        }
+
+        /* Navegação */
+        nav a {
+            position: relative;
+            transition: color .25s ease;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: #facc15;
+            transition: width .25s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Títulos */
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: "";
+            display: block;
+            width: 55px;
+            height: 3px;
+            margin: 8px auto 0;
+            border-radius: 10px;
+            background: #facc15;
+            transform: scaleX(.6);
+            transition: transform .3s ease;
+        }
+
+        .section-title:hover h2::after {
+            transform: scaleX(1.5);
+        }
+
+        /* Tabela */
+        tbody tr {
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        tbody tr:hover {
+            transform: scale(1.005);
+        }
+
+        /* FAQ */
+        .faq details {
+            transition: background .25s ease, padding-left .25s ease;
+        }
+
+        .faq details:hover {
+            background: #f8fafc;
+            padding-left: 28px;
+        }
+
+        .faq details[open] {
+            background: #f8fafc;
+        }
+
+        /* Animações */
+        @keyframes heroEnter {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glowText {
+            from {
+                text-shadow: 0 0 0 rgba(250,204,21,0);
+            }
+            to {
+                text-shadow: 0 0 18px rgba(250,204,21,.28);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-20px, 18px);
+            }
+        }
+
+        @keyframes iconBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(-8deg); }
+            100% { transform: scale(1.18) rotate(-5deg); }
+        }
+
+        /* Respeita usuários que preferem menos animações */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
     </style>
 </head>
 
 <body>
+    <div id="scroll-progress"></div>
 
     <!-- =========================
          CABEÇALHO
@@ -462,7 +743,7 @@
              INTRODUÇÃO
         ========================== -->
 
-        <section class="intro">
+        <section class="intro reveal">
 
             <h2>🚗 Por que falar sobre trânsito?</h2>
 
@@ -491,7 +772,7 @@
              PRINCIPAIS TEMAS
         ========================== -->
 
-        <section id="seguranca">
+        <section id="seguranca" class="reveal">
 
             <div class="section-title">
 
@@ -605,7 +886,7 @@
              MOTORISTAS
         ========================== -->
 
-        <section id="motoristas">
+        <section id="motoristas" class="reveal">
 
             <div class="section-title">
 
@@ -665,7 +946,7 @@
              PEDESTRES
         ========================== -->
 
-        <section id="pedestres">
+        <section id="pedestres" class="reveal">
 
             <div class="section-title">
 
@@ -704,7 +985,7 @@
              MOTOCICLISTAS
         ========================== -->
 
-        <section>
+        <section class="reveal">
 
             <div class="section-title">
 
@@ -758,7 +1039,7 @@
              CICLISTAS
         ========================== -->
 
-        <section>
+        <section class="reveal">
 
             <div class="section-title">
 
@@ -844,7 +1125,7 @@
              MANUTENÇÃO
         ========================== -->
 
-        <section>
+        <section class="reveal">
 
             <div class="section-title">
 
@@ -923,7 +1204,7 @@
              VIAGENS
         ========================== -->
 
-        <section>
+        <section class="reveal">
 
             <div class="section-title">
 
@@ -1013,7 +1294,7 @@
              FRASE
         ========================== -->
 
-        <section class="quote">
+        <section class="quote reveal">
 
             <p>
                 “No trânsito, cada escolha importa.
@@ -1028,7 +1309,7 @@
              FAQ
         ========================== -->
 
-        <section id="faq">
+        <section id="faq" class="reveal">
 
             <div class="section-title">
 
@@ -1146,6 +1427,38 @@
         </p>
 
     </footer>
+
+
+    <script>
+        // Barra de progresso
+        const progress = document.getElementById("scroll-progress");
+
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const height = document.documentElement.scrollHeight - window.innerHeight;
+            const percentage = height > 0 ? (scrollTop / height) * 100 : 0;
+            progress.style.width = percentage + "%";
+        }
+
+        window.addEventListener("scroll", updateProgress, { passive: true });
+        updateProgress();
+
+        // Efeito reveal ao entrar na tela
+        const revealItems = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12
+        });
+
+        revealItems.forEach(item => observer.observe(item));
+    </script>
 
 </body>
 </html>
