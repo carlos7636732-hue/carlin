@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dia Nacional de Luta da Pessoa com Deficiência</title>
+<meta name="description" content="Vídeo de conscientização e dados do Censo 2022 (IBGE) sobre pessoas com deficiência no Brasil.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12203a;--bg:#f4f6fb;--card:#fff;--blue:#1f4fd8;--amber:#e08a00;--yellow:#ffc21a;--muted:#4a5670;--line:#d5dbe8}
+@media (prefers-color-scheme:dark){:root{--ink:#eef2fb;--bg:#0d1526;--card:#16213a;--blue:#7fa2ff;--amber:#ffb84d;--muted:#aab6d3;--line:#2a3757}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.125rem/1.6 "Atkinson Hyperlegible",system-ui,sans-serif}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.25rem}
+header{padding:2.5rem 0 1.5rem}
+h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.08;margin:0 0 .75rem;max-width:18ch}
+h2{font-size:1.6rem;margin:0 0 .5rem}
+.lead{max-width:60ch;color:var(--muted);margin:0}
+section{padding:2.5rem 0}
+/* vídeo */
+.stage{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#12203a;color:#fff;display:grid;place-items:center;text-align:left}
+.scene{position:absolute;inset:0;padding:6%;display:flex;flex-direction:column;justify-content:center;gap:.6em;transition:opacity .6s}
+.scene .big{font-size:clamp(1.8rem,7vw,4.4rem);font-weight:700;line-height:1.05}
+.scene .small{font-size:clamp(1rem,2.6vw,1.6rem);max-width:32ch;opacity:.92}
+.scene .src{font-size:clamp(.75rem,1.6vw,.95rem);opacity:.75}
+.bar{position:absolute;left:0;bottom:0;height:8px;width:0;background:var(--yellow)}
+.play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(18,32,58,.82);border:0;color:#fff;font:700 1.4rem "Atkinson Hyperlegible",sans-serif;cursor:pointer;gap:.5rem;align-content:center}
+.play span{display:grid;place-items:center;width:5rem;height:5rem;border-radius:50%;background:var(--yellow);color:#12203a;font-size:2rem;padding-left:.3rem}
+.ctrl{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center;margin-top:.9rem}
+button.b{font:700 1rem inherit;font-family:inherit;padding:.6rem 1rem;border-radius:8px;border:2px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer}
+label{display:flex;gap:.5rem;align-items:center;cursor:pointer}
+/* gráficos */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-top:1.25rem}
+.panel h3{margin:0 0 .25rem;font-size:1.2rem}
+.legend{display:flex;gap:1.25rem;margin:.5rem 0 1rem;font-size:1rem}
+.sw{display:inline-block;width:.9em;height:.9em;border-radius:3px;margin-right:.4em}
+.row{display:grid;grid-template-columns:8.5rem 1fr;gap:.75rem;align-items:center;margin:.9rem 0}
+.row>b{font-size:1rem}
+.bars{display:grid;gap:4px}
+.bl{display:flex;align-items:center;gap:.5rem}
+.fill{height:1.15rem;border-radius:0 5px 5px 0;min-width:2px;width:0;transition:width .9s ease}
+.bl i{font-style:normal;font-weight:700;font-size:.95rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem;margin-top:1.25rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.25rem}
+.stat strong{display:block;font-size:2.4rem;line-height:1.1}
+.fonte{font-size:.95rem;color:var(--muted);margin:1rem 0 0}
+footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:1rem}
+@media (max-width:34rem){.row{grid-template-columns:1fr;gap:.25rem}}
+@media (prefers-reduced-motion:reduce){.fill,.scene{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Acessibilidade é um direito, não um favor.</h1>
+  <p class="lead">Em 21 de setembro, o Brasil celebra o Dia Nacional de Luta da Pessoa com Deficiência (Lei 11.133/2005). Assista ao vídeo e conheça os números.</p>
+</header>
+
+<main>
+<section aria-labelledby="t-video" style="padding-top:.5rem">
+  <h2 id="t-video">Vídeo de conscientização</h2>
+  <div class="stage" id="stage" role="region" aria-label="Vídeo animado com legendas">
+    <div class="scene" id="scene" aria-live="off"></div>
+    <div class="bar" id="bar"></div>
+    <button class="play" id="start" aria-label="Assistir ao vídeo"><span>▶</span>Assistir (42 segundos)</button>
+  </div>
+  <div class="ctrl">
+    <button class="b" id="pp">Pausar</button>
+    <button class="b" id="rs">Recomeçar</button>
+    <label><input type="checkbox" id="voz"> Narração em voz alta</label>
+  </div>
+  <p class="fonte">O vídeo tem legendas na tela e narração opcional. Para usar um vídeo do YouTube, veja o comentário no fim do arquivo <code>index.html</code>.</p>
+</section>
+
+<section aria-labelledby="t-dados">
+  <h2 id="t-dados">Os números no Brasil</h2>
+  <p class="lead">Segundo o Censo 2022, 14,4 milhões de pessoas com 2 anos ou mais têm deficiência. Isso é 7,3% da população dessa faixa etária.</p>
+  <div class="cards">
+    <div class="stat"><strong>14,4 mi</strong>de pessoas com deficiência (7,3%)</div>
+    <div class="stat"><strong>45,4%</strong>têm 60 anos ou mais</div>
+    <div class="stat"><strong>7,4%</strong>concluíram o ensino superior, contra 19,5% das pessoas sem deficiência</div>
+  </div>
+
+  <div class="panel">
+    <h3>Pessoas com deficiência por região e sexo (% da população de 2 anos ou mais)</h3>
+    <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>Homens</span><span><i class="sw" style="background:var(--amber)"></i>Mulheres</span></div>
+    <div id="c1" role="img" aria-label="Gráfico de barras. Brasil: homens 6,4%, mulheres 8,1%. Norte: 6,6% e 7,7%. Nordeste: 7,6% e 9,5%. Sudeste: 5,9% e 7,7%. Sul: 5,9% e 7,3%. Centro-Oeste: 5,8% e 7,2%."></div>
+  </div>
+
+  <div class="panel">
+    <h3>Pessoas com deficiência por faixa etária (% da população)</h3>
+    <div id="c2" role="img" aria-label="Gráfico de barras. De 2 a 14 anos: 2,2%. De 15 a 59 anos: 5,4%. 70 anos ou mais: 27,5%."></div>
+  </div>
+
+  <p class="fonte">Fonte: IBGE, Censo Demográfico 2022 — Pessoas com Deficiência e Pessoas Diagnosticadas com Transtorno do Espectro Autista: resultados preliminares da amostra (23/05/2025). <a href="https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43463-censo-2022-brasil-tem-14-4-milhoes-de-pessoas-com-deficiencia" target="_blank" rel="noopener">Ver no site do IBGE</a>. O IBGE considera pessoa com deficiência quem tem "muita dificuldade" ou "não consegue de modo algum" em ao menos uma função (enxergar, ouvir, andar, pegar objetos, aspectos cognitivos), mesmo com auxílio.</p>
+</section>
+</main>
+
+<footer>
+  Datas: 21 de setembro (Brasil) e 3 de dezembro (Dia Internacional das Pessoas com Deficiência, ONU). Direitos garantidos na Lei Brasileira de Inclusão (Lei 13.146/2015).
+</footer>
+</div>
+
+<script>
+/* ---------- Gráficos ---------- */
+function chart(id, rows, colors, max){
+  const el=document.getElementById(id);
+  el.innerHTML=rows.map(r=>`<div class="row"><b>${r.l}</b><div class="bars">`+
+    r.v.map((v,i)=>`<div class="bl"><div class="fill" data-w="${v/max*100}" style="background:${colors[i]}"></div><i>${String(v).replace('.',',')}%</i></div>`).join('')+
+    `</div></div>`).join('');
+}
+chart('c1',[
+  {l:'Brasil',v:[6.4,8.1]},{l:'Norte',v:[6.6,7.7]},{l:'Nordeste',v:[7.6,9.5]},
+  {l:'Sudeste',v:[5.9,7.7]},{l:'Sul',v:[5.9,7.3]},{l:'Centro-Oeste',v:[5.8,7.2]}
+],['var(--blue)','var(--amber)'],10);
+chart('c2',[{l:'2 a 14 anos',v:[2.2]},{l:'15 a 59 anos',v:[5.4]},{l:'70 anos ou mais',v:[27.5]}],['var(--blue)'],30);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.fill').forEach(f=>f.style.width=f.dataset.w+'%');io.unobserve(e.target)}}));
+document.querySelectorAll('#c1,#c2').forEach(c=>io.observe(c));
+
+/* ---------- Vídeo animado ---------- */
+const S=[
+ {bg:'#12203a',big:'21 de setembro',small:'Dia Nacional de Luta da Pessoa com Deficiência.',say:'21 de setembro. Dia Nacional de Luta da Pessoa com Deficiência.'},
+ {bg:'#1f4fd8',big:'14,4 milhões',small:'de brasileiros têm deficiência. São 7,3% da população.',src:'Fonte: IBGE, Censo 2022',say:'14,4 milhões de brasileiros têm deficiência. São 7,3% da população.'},
+ {bg:'#12203a',big:'A barreira não está na pessoa.',small:'Está na escada sem rampa, no site sem acessibilidade e no preconceito.',say:'A barreira não está na pessoa. Está na escada sem rampa, no site sem acessibilidade e no preconceito.'},
+ {bg:'#7a3e00',big:'7,4% x 19,5%',small:'Ensino superior concluído: pessoas com deficiência x sem deficiência.',src:'Fonte: IBGE, Censo 2022',say:'Apenas 7,4% das pessoas com deficiência concluíram o ensino superior, contra 19,5% das pessoas sem deficiência.'},
+ {bg:'#1f4fd8',big:'Acessibilidade é lei.',small:'A Lei Brasileira de Inclusão garante direitos à educação, ao trabalho e à cultura.',src:'Lei 13.146/2015',say:'Acessibilidade é lei. A Lei Brasileira de Inclusão garante direitos à educação, ao trabalho e à cultura.'},
+ {bg:'#12203a',big:'Nada sobre nós, sem nós.',small:'Inclusão começa com você. Ouça, respeite e abra caminho.',say:'Nada sobre nós, sem nós. Inclusão começa com você. Ouça, respeite e abra caminho.'}
+];
+const DUR=7000, TOTAL=DUR*S.length;
+const $=id=>document.getElementById(id), stage=$('stage'), sc=$('scene'), bar=$('bar'), start=$('start'), pp=$('pp');
+let t=0, playing=false, cur=-1, last=0, raf;
+function show(i){
+  cur=i; const s=S[i]; stage.style.background=s.bg;
+  sc.innerHTML=`<div class="big">${s.big}</div><div class="small">${s.small}</div>${s.src?`<div class="src">${s.src}</div>`:''}`;
+  speak(s.say);
+}
+function speak(txt){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  if($('voz').checked && playing){const u=new SpeechSynthesisUtterance(txt);u.lang='pt-BR';speechSynthesis.speak(u)}
+}
+function tick(now){
+  if(!playing) return;
+  t+=now-last; last=now;
+  if(t>=TOTAL){t=TOTAL;playing=false;pp.textContent='Assistir de novo';bar.style.width='100%';return}
+  const i=Math.floor(t/DUR); if(i!==cur) show(i);
+  bar.style.width=(t/TOTAL*100)+'%';
+  raf=requestAnimationFrame(tick);
+}
+function play(){
+  if(t>=TOTAL) t=0;
+  start.hidden=true; playing=true; pp.textContent='Pausar'; last=performance.now();
+  if(cur<0||Math.floor(t/DUR)!==cur) show(Math.floor(t/DUR));
+  raf=requestAnimationFrame(tick);
+}
+function pause(){playing=false;pp.textContent='Continuar';cancelAnimationFrame(raf);if('speechSynthesis' in window)speechSynthesis.cancel()}
+start.onclick=play;
+pp.onclick=()=>{playing?pause():play()};
+$('rs').onclick=()=>{pause();t=0;cur=-1;play()};
+$('voz').onchange=()=>{if(playing)speak(S[cur].say);else if('speechSynthesis' in window)speechSynthesis.cancel()};
+show(0);
+/*
+  USAR UM VÍDEO DO YOUTUBE (opcional): apague a <div class="stage"> ... </div> e os controles abaixo dela
+  e cole no lugar (troque ID_DO_VIDEO):
+  <iframe width="100%" style="aspect-ratio:16/9;border:0;border-radius:14px" src="https://www.youtube.com/embed/ID_DO_VIDEO"
+    title="Vídeo sobre o Dia da Pessoa com Deficiência" allowfullscreen></iframe>
+*/
+</script>
+</body>
+</html>
