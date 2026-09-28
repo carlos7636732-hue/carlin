@@ -1,5 +1,49 @@
-.botão{
-posição:absoluto;
-principal:250px;
-esquerda:200px;
-{
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botões coloridos</title>
+
+  <style>
+    .botao {
+      position: absolute;
+      top: 250px;
+      left: 200px;
+
+      background-color: #3498db; /* cor de fundo */
+      color: #ffffff;            /* cor do texto */
+      border: 2px solid #2980b9; /* cor da borda */
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .botao:hover {
+      background-color: #2ecc71; /* cor ao passar o mouse */
+    }
+
+    /* Cores diferentes para cada botão */
+    .botao.vermelho {
+      background-color: red;
+      border-color: darkred;
+      left: 200px;
+    }
+
+    .botao.verde {
+      background-color: green;
+      border-color: darkgreen;
+      left: 350px; /* posição diferente para não ficar em cima do outro */
+    }
+
+    .botao.vermelho:hover { background-color: #ff6666; }
+    .botao.verde:hover    { background-color: #33cc33; }
+  </style>
+</head>
+<body>
+
+  <button class="botao vermelho">Sair</button>
+  <button class="botao verde">Salvar</button>
+
+</body>
+</html>
