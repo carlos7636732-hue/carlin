@@ -2,11 +2,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Meu Site</title>
   <style>
-    :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -18,16 +16,9 @@
       gap: 40px;
       padding: 20px;
       font-family: Arial, sans-serif;
-      background: #1e1e2f linear-gradient(135deg, #1e1e2f, #3b3b5c, #1e1e2f);
-      background-size: 300% 300%;
-      animation: fundo 10s ease infinite;
+      background: #1e1e2f;
       color: #fff;
       text-align: center;
-    }
-    @keyframes fundo {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
     h1 { font-size: clamp(48px, 10vw, 110px); margin: 0; }
     p { font-size: clamp(20px, 3vw, 32px); margin: 0; opacity: .85; }
@@ -40,14 +31,8 @@
       font-weight: bold;
       text-decoration: none;
       border-radius: 100px;
-      box-shadow: 0 10px 40px rgba(255, 0, 0, .5);
-      transition: transform .2s, background .2s, box-shadow .2s;
     }
-    .btn-youtube:hover {
-      background: #cc0000;
-      transform: scale(1.1);
-      box-shadow: 0 14px 50px rgba(255, 0, 0, .7);
-    }
+    .btn-youtube:hover { background: #cc0000; }
   </style>
 </head>
 <body>
