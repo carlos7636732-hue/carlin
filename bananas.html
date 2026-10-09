@@ -2,9 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Meu Site</title>
   <style>
+    :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -16,7 +18,7 @@
       gap: 40px;
       padding: 20px;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #3b3b5c, #1e1e2f);
+      background: #1e1e2f linear-gradient(135deg, #1e1e2f, #3b3b5c, #1e1e2f);
       background-size: 300% 300%;
       animation: fundo 10s ease infinite;
       color: #fff;
@@ -27,15 +29,8 @@
       50%  { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    h1 {
-      font-size: clamp(48px, 10vw, 110px);
-      margin: 0;
-    }
-    p {
-      font-size: clamp(20px, 3vw, 32px);
-      margin: 0;
-      opacity: .85;
-    }
+    h1 { font-size: clamp(48px, 10vw, 110px); margin: 0; }
+    p { font-size: clamp(20px, 3vw, 32px); margin: 0; opacity: .85; }
     .btn-youtube {
       display: inline-block;
       padding: 28px 80px;
@@ -58,4 +53,6 @@
 <body>
   <h1>Bem-vindo!</h1>
   <p>Clique no botão abaixo para continuar</p>
-  <a class="btn-youtube"
+  <a class="btn-youtube" href="https://youtu.be/LkBjOeoHBhA?si=lwk77bZnmZcJNLES" target="_blank" rel="noopener">▶ Assistir ao vídeo</a>
+</body>
+</html>
