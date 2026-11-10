@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Dinheiro - Gestão Financeira</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:Arial,sans-serif;
+ background:#f1f5f9;color:#1e293b;
+}
+header{
+ background:#064e3b;color:white;
+ padding:30px 15px;text-align:center;
+}
+header h1{font-size:30px;margin-bottom:10px}
+header p{color:#d1fae5}
+nav{
+ background:#022c22;padding:14px;
+ text-align:center;
+}
+nav a{
+ color:white;text-decoration:none;
+ margin:0 12px;font-weight:bold;
+}
+.container{max-width:1050px;margin:25px auto;padding:15px}
+h2{margin-bottom:15px;color:#065f46}
+.cards{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:15px;margin-bottom:25px;
+}
+.card{
+ background:white;padding:22px;border-radius:12px;
+ box-shadow:0 3px 12px #00000012;
+}
+.card p{color:#64748b;margin-bottom:8px}
+.valor{font-size:25px;font-weight:bold}
+.verde{color:#059669}
+.vermelho{color:#dc2626}
+.formulario{
+ background:white;padding:22px;border-radius:12px;
+ margin-bottom:25px;
+}
+input,select,button{
+ width:100%;padding:12px;margin:7px 0;
+ border:1px solid #cbd5e1;border-radius:7px;
+ font-size:15px;
+}
+button{
+ background:#059669;color:white;border:0;
+ cursor:pointer;font-weight:bold;
+}
+button:hover{background:#047857}
+.botoes{
+ display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+table{
+ width:100%;border-collapse:collapse;background:white;
+ border-radius:10px;overflow:hidden;
+}
+th,td{padding:13px;text-align:left;border-bottom:1px solid #e2e8f0}
+th{background:#065f46;color:white}
+.excluir{background:#dc2626;padding:7px;width:auto}
+.meta{background:white;padding:20px;border-radius:12px;margin-top:25px}
+footer{
+ background:#022c22;color:white;text-align:center;
+ padding:25px;margin-top:35px;
+}
+section{margin-bottom:35px}
+.dica{background:#d1fae5;padding:18px;border-radius:10px;line-height:1.7}
+@media(max-width:600px){
+ nav a{display:inline-block;margin:7px}
+ table{font-size:12px}
+ th,td{padding:8px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>💰 Meu Dinheiro</h1>
+<p>Aprenda a organizar suas finanças e construir seu futuro!</p>
+</header>
+
+<nav>
+<a href="#inicio">Início</a>
+<a href="#controle">Controle financeiro</a>
+<a href="#meta">Metas</a>
+<a href="#dicas">Dicas</a>
+</nav>
+
+<main class="container">
+
+<section id="inicio">
+<h2>Gestão Financeira Pessoal</h2>
+<p>
+A gestão financeira pessoal é a maneira de organizar o dinheiro,
+controlar os gastos, economizar e planejar o futuro.
+Com organização, podemos evitar dívidas e alcançar nossos objetivos.
+</p>
+</section>
+
+<section class="cards">
+<div class="card">
+<p>💵 Total de entradas</p>
+<div class="valor verde" id="entradas">R$ 0,00</div>
+</div>
+<div class="card">
+<p>🛒 Total de despesas</p>
+<div class="valor vermelho" id="despesas">R$ 0,00</div>
+</div>
+<div class="card">
+<p>💰 Saldo disponível</p>
+<div class="valor" id="saldo">R$ 0,00</div>
+</div>
+</section>
+
+<section id="controle">
+<div class="formulario">
+<h2>Adicionar movimentação</h2>
+
+<input type="text" id="descricao" placeholder="Descrição (ex: Salário, alimentação)">
+
+<input type="number" id="valor" placeholder="Valor em reais" min="0.01" step="0.01">
+
+<select id="tipo">
+<option value="entrada">Entrada de dinheiro</option>
+<option value="despesa">Despesa</option>
+</select>
+
+<select id="categoria">
+<option>Salário / Mesada</option>
+<option>Alimentação</option>
+<option>Transporte</option>
+<option>Educação</option>
+<option>Moradia</option>
+<option>Lazer</option>
+<option>Outros</option>
+</select>
+
+<button onclick="adicionar()">Adicionar movimentação</button>
+</div>
+
+<h2>Histórico financeiro</h2>
+<table>
+<thead>
+<tr>
+<th>Descrição</th>
+<th>Categoria</th>
+<th>Tipo</th>
+<th>Valor</th>
+<th>Ação</th>
+</tr>
+</thead>
+<tbody id="historico"></tbody>
+</table>
+
+<div class="botoes">
+<button onclick="exportar()">📊 Exportar para Excel</button>
+<button onclick="window.print()">🖨️ Imprimir relatório</button>
+</div>
+</section>
+
+<section id="meta" class="meta">
+<h2>🎯 Minha meta de economia</h2>
+<p>Defina quanto deseja economizar:</p>
+<input type="number" id="objetivo" placeholder="Ex: 1000">
+<input type="number" id="guardado" placeholder="Quanto já economizou?">
+<button onclick="calcularMeta()">Calcular minha meta</button>
+<p id="resultadoMeta"></p>
+</section>
+
+<section id="dicas">
+<h2>📚 Dicas de educação financeira</h2>
+<div class="dica">
+<p>✅ Anote todos os seus gastos.</p>
+<p>✅ Evite comprar por impulso.</p>
+<p>✅ Economize uma parte do dinheiro que recebe.</p>
+<p>✅ Compare preços antes de comprar.</p>
+<p>✅ Planeje suas compras e objetivos.</p>
+<p>✅ Evite dívidas desnecessárias.</p>
+</div>
+</section>
+
+<section>
+<h2>💻 Tecnologia e Educação Financeira</h2>
+<p>
+O Excel ajuda a organizar despesas, criar planilhas e calcular
+o orçamento. O Word permite elaborar relatórios, planejamentos
+e documentos financeiros. Aprender essas ferramentas também
+ajuda na preparação para o mercado de trabalho.
+</p>
+</section>
+
+</main>
+
+<footer>
+<h3>Meu Dinheiro</h3>
+<p>Educação financeira para um futuro melhor.</p>
+<p>Projeto interdisciplinar - 2026</p>
+</footer>
+
+<script>
+let dados = JSON.parse(localStorage.getItem("financas")) || [];
+
+function dinheiro(valor){
+ return valor.toLocaleString("pt-BR",{
+ style:"currency",currency:"BRL"
+ });
+}
+
+function salvar(){
+ localStorage.setItem("financas",JSON.stringify(dados));
+ atualizar();
+}
+
+function adicionar(){
+ const descricao=document.getElementById("descricao").value.trim();
+ const valor=Number(document.getElementById("valor").value);
+ const tipo=document.getElementById("tipo").value;
+ const categoria=document.getElementById("categoria").value;
+
+ if(!descricao || !Number.isFinite(valor) || valor<=0){
+  alert("Preencha a descrição e um valor válido!");
+  return;
+ }
+
+ dados.push({descricao,valor,tipo,categoria});
+ salvar();
+
+ document.getElementById("descricao").value="";
+ document.getElementById("valor").value="";
+}
+
+function excluir(indice){
+ if(confirm("Deseja excluir esta movimentação?")){
+  dados.splice(indice,1);
+  salvar();
+ }
+}
+
+function atualizar(){
+ let entradas=0,despesas=0;
+ const tabela=document.getElementById("historico");
+ tabela.innerHTML="";
+
+ dados.forEach((item,i)=>{
+  if(item.tipo==="entrada") entradas+=item.valor;
+  else despesas+=item.valor;
+
+  tabela.innerHTML+=`
+  <tr>
+  <td>${escapar(item.descricao)}</td>
+  <td>${escapar(item.categoria)}</td>
+  <td>${item.tipo==="entrada"?"Entrada":"Despesa"}</td>
+  <td>${dinheiro(item.valor)}</td>
+  <td><button class="excluir" onclick="excluir(${i})">Excluir</button></td>
+  </tr>`;
+ });
+
+ document.getElementById("entradas").textContent=dinheiro(entradas);
+ document.getElementById("despesas").textContent=dinheiro(despesas);
+ document.getElementById("saldo").textContent=dinheiro(entradas-despesas);
+}
+
+function escapar(texto){
+ return String(texto).replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function calcularMeta(){
+ const objetivo=Number(document.getElementById("objetivo").value);
+ const guardado=Number(document.getElementById("guardado").value);
+
+ if(!Number.isFinite(objetivo)||objetivo<=0||
+ !Number.isFinite(guardado)||guardado<0){
+  alert("Informe valores válidos para a meta!");
+  return;
+ }
+
+ const restante=Math.max(0,objetivo-guardado);
+ const porcentagem=Math.min(100,guardado/objetivo*100);
+
+ document.getElementById("resultadoMeta").textContent=
+ `Você já alcançou ${porcentagem.toFixed(1)}% da sua meta. Faltam ${dinheiro(restante)}.`;
+}
+
+function exportar(){
+ let csv="\uFEFFDescrição;Categoria;Tipo;Valor\n";
+ dados.forEach(item=>{
+  csv+=`"${item.descricao.replace(/"/g,'""')}";"${item.categoria}";"${item.tipo}";"${item.valor.toFixed(2)}"\n`;
+ });
+
+ const arquivo=new Blob([csv],{type:"text/csv;charset=utf-8"});
+ const link=document.createElement("a");
+ link.href=URL.createObjectURL(arquivo);
+ link.download="controle-financeiro.csv";
+ link.click();
+ URL.revokeObjectURL(link.href);
+}
+
+atualizar();
+</script>
+
+</body>
+</html>
